@@ -2,6 +2,7 @@ import React, {CSSProperties, useEffect} from "react";
 import {Button, Grid, Typography} from "@mui/material";
 import styles from "../styles/Home.module.scss";
 import {Calculate} from "@mui/icons-material";
+import {useRouter} from "next/router";
 
 const boxStyle: CSSProperties = {
     background: '#ffffff7d',
@@ -13,14 +14,18 @@ const boxStyle: CSSProperties = {
 
 export default function Home() {
 
+    const router = useRouter();
+
     useEffect(() => {
-        document.body.classList.add("bg");
-        document.body.style.backgroundImage = 'url("landing-page.jpg")';
+        if (router.pathname === '/') {
+            document.body.classList.add("bg");
+            document.body.style.backgroundImage = 'url("landing-page.jpg")';
+        }
         return () => {
             document.body.classList.remove("bg");
             document.body.style.backgroundImage = '';
         }
-    }, []);
+    }, [router.pathname]);
   return (
       <Grid container direction="row" style={{width: '100vw'}} justifyContent="center" columnSpacing={2}>
           <Grid item xs={12} style={boxStyle}>

@@ -1,11 +1,30 @@
 import {NextPage} from "next";
 import {Grid, Typography} from "@mui/material";
 import {useState} from "react";
-import StepperProcess from "../components/calculator/StepperProcess";
+import StepperProcess, {StepperProcessStep} from "../components/calculator/StepperProcess";
+import ProvinceSelect from "../components/calculator/inputs/ProvinceSelect";
 
 
 const Calculator: NextPage = () => {
-    const steps = ['Bundesland auswählen', 'Zeugnisse hinterlegen', 'Prüfungsfächer auswählen', 'Vorabi Ergebnisse angeben'];
+    const steps: StepperProcessStep[] = [
+        {
+            label: 'Bundesland auswählen',
+            component: <ProvinceSelect />
+
+        },
+        {
+            label: 'Zeugnisse hinterlegen',
+            component: <div />
+        },
+        {
+            label: 'Prüfungsfächer auswählen',
+            component: <div />
+        },
+        {
+            label: 'Vorabi Ergebnisse angeben',
+            component: <div />
+        }
+    ];
 
     const [activeStep, setActiveStep] = useState<number>(0);
 
@@ -16,9 +35,7 @@ const Calculator: NextPage = () => {
                     Abi-Noten Rechner
                 </Typography>
             </Grid>
-            <Grid item xs={12}>
-                <StepperProcess activeStep={activeStep} setActiveStep={setActiveStep} steps={steps} />
-            </Grid>
+            <StepperProcess activeStep={activeStep} setActiveStep={setActiveStep} steps={steps} />
         </Grid>
     )
 }

@@ -48,17 +48,17 @@ const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveSte
                     ))}
                 </Stepper>
             </Grid>
-            <Grid item xs={12} container direction="row" justifyContent="center" style={{marginTop: '30px'}}>
+            <Grid item xs={8} container direction="row" justifyContent="center">
                 {steps[activeStep]?.component ?? null}
             </Grid>
-            <Grid item xs={12} container direction="row" justifyContent="space-between" style={{marginTop: '30px', marginLeft: '10%'}}>
-                <Grid item xs={2}>
+            <Grid item xs={8} container direction="row" justifyContent="space-between">
+                <Grid item xs={3}>
                     <Button color="primary" variant="contained" onClick={handleBackClick}>
                         <ArrowLeft />&nbsp;
                         back
                     </Button>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={3}>
                     <Button color="primary" variant="contained" onClick={handleNextClick}>
                         <ArrowRight />&nbsp;
                         next

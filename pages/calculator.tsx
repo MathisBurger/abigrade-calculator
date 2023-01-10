@@ -44,7 +44,7 @@ const Calculator: NextPage = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
 
     return (
-        <Grid container direction="row" justifyContent="center" style={{width: '95vw'}}>
+        <Grid container direction="row" justifyContent="center" spacing={2}>
             <Grid item xs={12}>
                 <Typography variant="h3" textAlign="center">
                     Abi-Noten Rechner

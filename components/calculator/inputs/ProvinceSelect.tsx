@@ -14,11 +14,12 @@ const ProvinceSelect: React.FC<ProvinceSelectProps> = ({province, setProvince}) 
 
 
     return (
-          <Grid item xs={4}>
+          <Grid item xs={5}>
              <Typography variant="h4">Bundesland auswählen:</Typography>
               <Select
                   value={`${province}`}
                   onChange={(e) => setProvince(e.target.value as Province)}
+                  fullWidth
               >
                   {Object.entries(Province)
                       .map((value) => <MenuItem value={value[0]} key={value[0]}>{value[1]}</MenuItem> )}

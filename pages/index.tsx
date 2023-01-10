@@ -1,16 +1,8 @@
-import React, {CSSProperties, useEffect} from "react";
-import {Button, Grid, Typography} from "@mui/material";
-import styles from "../styles/Home.module.scss";
+import React, {useEffect} from "react";
+import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import {Calculate} from "@mui/icons-material";
 import {useRouter} from "next/router";
 
-const boxStyle: CSSProperties = {
-    background: '#ffffff7d',
-    borderRadius: '8px',
-    marginTop: '30px',
-    maxWidth: 'fit-content',
-    padding: '5px'
-};
 
 export default function Home() {
 
@@ -27,32 +19,37 @@ export default function Home() {
         }
     }, [router.pathname]);
   return (
-      <Grid container direction="row" style={{width: '100vw'}} justifyContent="center" columnSpacing={2}>
-          <Grid item xs={12} style={boxStyle}>
-              <Typography variant="h1" textAlign="center">Abinoten Rechner</Typography>
+      <Grid container direction="row" justifyContent="center" columnSpacing={2} spacing={2}>
+          <Grid item xs={12}>
+              <Card style={{backgroundColor: '#ffffff7d'}}>
+                  <CardContent>
+                      <Typography variant="h1" textAlign="center">Abinoten Rechner</Typography>
+                  </CardContent>
+              </Card>
           </Grid>
           <Grid item xs={12} />
-          <Grid item xs={12} style={boxStyle} className={styles.mainText}>
-              <Typography paragraph textAlign="center">
-                  Der Abinoten-Rechner ist eine einfache Webapplikation, die dazu gebaut wurde,
-                  um den Abischnitt eines Nutzers auszurechnen. Es gibt bisher nur Unterstützung für
-                  Schleswig-Holstein. Aber zukünftig wird auch noch mehr dazu kommen. Hierbei können
-                  die Noten mehrerer Zeugnisse hinterlegt werden. Wenn ein Halbjahr fehlt, kann man dieses einfach
-                  anhand der anderen Zeugnisse errechnen lassen. Final wird dann der optimale Abischnitt berechnet
-                  und alle Schritte der Berechnung offengelegt.
-
-              </Typography>
+          <Grid item xs={12}>
+              <Card style={{backgroundColor: '#ffffff7d'}}>
+                  <CardContent>
+                      <Typography paragraph textAlign="center">
+                          Der Abinoten-Rechner ist eine einfache Webapplikation, die dazu gebaut wurde,
+                          um den Abischnitt eines Nutzers auszurechnen. Es gibt bisher nur Unterstützung für
+                          Schleswig-Holstein. Aber zukünftig wird auch noch mehr dazu kommen. Hierbei können
+                          die Noten mehrerer Zeugnisse hinterlegt werden. Wenn ein Halbjahr fehlt, kann man dieses einfach
+                          anhand der anderen Zeugnisse errechnen lassen. Final wird dann der optimale Abischnitt berechnet
+                          und alle Schritte der Berechnung offengelegt.
+                      </Typography>
+                  </CardContent>
+              </Card>
           </Grid>
           <Grid
               item
               xs={12}
               container
               direction="row"
-              alignItems="center"
               justifyContent="center"
-              style={{marginTop: '30px'}}
           >
-              <Grid item xs={2}>
+              <Grid item xs={6}>
                   <Button variant="contained" color="primary" size="large">
                       <Calculate /> &nbsp;
                       Zum Rechner

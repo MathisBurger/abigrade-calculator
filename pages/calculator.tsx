@@ -20,20 +20,24 @@ const Calculator: NextPage = () => {
             component: <ProvinceSelect
                 province={calculationValues.province ?? Province.SchleswigHolstein}
                 setProvince={(province) => setCalculationValues({...calculationValues, province})}
-            />
+            />,
+            checkCanSubmit: () => calculationValues.province !== undefined
 
         },
         {
             label: 'Zeugnisse hinterlegen',
-            component: <div />
+            component: <div />,
+            checkCanSubmit: () => true,
         },
         {
             label: 'Prüfungsfächer auswählen',
-            component: <div />
+            component: <div />,
+            checkCanSubmit: () => true,
         },
         {
             label: 'Vorabi Ergebnisse angeben',
-            component: <div />
+            component: <div />,
+            checkCanSubmit: () => true,
         }
     ];
 

@@ -1,9 +1,11 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
-import {Grid, Step, StepButton, Stepper} from "@mui/material";
+import {Button, Grid, Step, StepButton, Stepper} from "@mui/material";
+import {ArrowBack, ArrowCircleRight, ArrowLeft, ArrowRight} from "@mui/icons-material";
 
 export interface StepperProcessStep {
     label: string;
     component: JSX.Element;
+    checkCanSubmit: () => boolean;
 }
 
 interface StepperProcessProps {
@@ -17,6 +19,19 @@ const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveSte
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
     const handleStep = (step: number) => () => setActiveStep(step);
+
+    const handleNextClick = () => {
+        if (activeStep+1 <= steps.length-1 && steps[activeStep].checkCanSubmit()) {
+            setCompletedSteps([...completedSteps, activeStep]);
+            setActiveStep(activeStep+1);
+        }
+    }
+
+    const handleBackClick = () => {
+        if (activeStep-1 >= 0) {
+            setActiveStep(activeStep-1);
+        }
+    }
 
     const isCompleted = (step: number) => completedSteps.indexOf(step) > -1;
 
@@ -35,6 +50,20 @@ const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveSte
             </Grid>
             <Grid item xs={12} container direction="row" justifyContent="center" style={{marginTop: '30px'}}>
                 {steps[activeStep]?.component ?? null}
+            </Grid>
+            <Grid item xs={12} container direction="row" justifyContent="space-between" style={{marginTop: '30px', marginLeft: '10%'}}>
+                <Grid item xs={2}>
+                    <Button color="primary" variant="contained" onClick={handleBackClick}>
+                        <ArrowLeft />&nbsp;
+                        back
+                    </Button>
+                </Grid>
+                <Grid item xs={2}>
+                    <Button color="primary" variant="contained" onClick={handleNextClick}>
+                        <ArrowRight />&nbsp;
+                        next
+                    </Button>
+                </Grid>
             </Grid>
         </>
     );

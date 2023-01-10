@@ -17,7 +17,6 @@ const ProvinceSelect: React.FC<ProvinceSelectProps> = ({province, setProvince}) 
           <Grid item xs={4}>
              <Typography variant="h4">Bundesland auswählen:</Typography>
               <Select
-                  label="Bundesland"
                   value={`${province}`}
                   onChange={(e) => setProvince(e.target.value as Province)}
               >

@@ -65,7 +65,7 @@ const HeaderNavbar: React.FC<React.PropsWithChildren<any>> = ({children}) => {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar component="nav">
+            <AppBar component="nav" style={{width: '100vw'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"

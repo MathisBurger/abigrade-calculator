@@ -33,7 +33,7 @@ const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveSte
                     ))}
                 </Stepper>
             </Grid>
-            <Grid item xs={12} container direction="row" justifyContent="center">
+            <Grid item xs={12} container direction="row" justifyContent="center" style={{marginTop: '30px'}}>
                 {steps[activeStep]?.component ?? null}
             </Grid>
         </>

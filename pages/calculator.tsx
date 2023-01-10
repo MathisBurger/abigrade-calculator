@@ -2,14 +2,25 @@ import {NextPage} from "next";
 import {Grid, Typography} from "@mui/material";
 import {useState} from "react";
 import StepperProcess, {StepperProcessStep} from "../components/calculator/StepperProcess";
-import ProvinceSelect from "../components/calculator/inputs/ProvinceSelect";
+import ProvinceSelect, {Province} from "../components/calculator/inputs/ProvinceSelect";
 
+interface CalculationValues {
+    province?: Province;
+}
 
 const Calculator: NextPage = () => {
+
+    const [calculationValues, setCalculationValues] = useState<CalculationValues>({
+        province: Province.SchleswigHolstein
+    });
+
     const steps: StepperProcessStep[] = [
         {
             label: 'Bundesland auswählen',
-            component: <ProvinceSelect />
+            component: <ProvinceSelect
+                province={calculationValues.province ?? Province.SchleswigHolstein}
+                setProvince={(province) => setCalculationValues({...calculationValues, province})}
+            />
 
         },
         {

@@ -1,18 +1,28 @@
 import React from "react";
-import {Grid, MenuItem, Select} from "@mui/material";
+import {Grid, MenuItem, Select, Typography} from "@mui/material";
 
 export enum Province {
-    SchleswigHolstein
+    SchleswigHolstein = "Schleswig-Holstein"
 }
 
+interface ProvinceSelectProps {
+    province: Province;
+    setProvince: (province: Province) => void;
+}
 
-const ProvinceSelect: React.FC = () => {
+const ProvinceSelect: React.FC<ProvinceSelectProps> = ({province, setProvince}) => {
 
 
     return (
           <Grid item xs={4}>
-              <Select label="Bundesland">
-                  {Object.keys(Province).map((value) => <MenuItem value={value}>{value}</MenuItem> )}
+             <Typography variant="h4">Bundesland auswählen:</Typography>
+              <Select
+                  label="Bundesland"
+                  value={`${province}`}
+                  onChange={(e) => setProvince(e.target.value as Province)}
+              >
+                  {Object.entries(Province)
+                      .map((value) => <MenuItem value={value[0]} key={value[0]}>{value[1]}</MenuItem> )}
               </Select>
           </Grid>
     );

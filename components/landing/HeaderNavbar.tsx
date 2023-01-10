@@ -47,7 +47,7 @@ const HeaderNavbar: React.FC<React.PropsWithChildren<any>> = ({children}) => {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ my: 2 }}>
-                MUI
+                Abi-Noten Rechner
             </Typography>
             <Divider />
             <List>

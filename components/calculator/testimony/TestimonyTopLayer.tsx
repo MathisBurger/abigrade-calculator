@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Grid} from "@mui/material";
 import TestimonySideList from "./TestimonySideList";
+import TestimonyGradeRegister from "./TestimonyGradeRegister";
 
 export enum Semester {
     Q1_1 = "Q1.1",
@@ -33,6 +34,7 @@ const TestimonyTopLayer: React.FC<TestimonyTopLayerProps> = ({testimonies, setTe
     return (
         <Grid item xs={10} container direction="row" spacing={2}>
             <TestimonySideList testimonies={testimonies} setTestimonies={setTestimonies} setCurrentTestimony={setCurrentTestimony}/>
+            <TestimonyGradeRegister testimonies={testimonies} testimonyIndex={currentTestimony} setTestimonys={setTestimonies} />
         </Grid>
     );
 }

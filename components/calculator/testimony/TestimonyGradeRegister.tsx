@@ -46,7 +46,7 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
         <Grid item xs={9}>
             <Typography variant="h4">{testimony.name} ({testimony.semester})</Typography>
             {testimony.grades.map((grade, i) => (
-                <Grid container direction="row" spacing={2} key={grade.subject} sx={{marginTop: '20px'}}>
+                <Grid container direction="row" spacing={2} key={`key-${i}`} sx={{marginTop: '20px'}}>
                     <Grid item xs={6}>
                         <TextField
                             value={grade.subject}

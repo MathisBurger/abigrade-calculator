@@ -33,7 +33,7 @@ const Calculator: NextPage = () => {
                 testimonies={calculationValues.testomonies ?? []}
                 setTestimonies={(testomonies) => setCalculationValues({...calculationValues, testomonies})}
             />,
-            checkCanSubmit: () => true,
+            checkCanSubmit: () => (calculationValues?.testomonies ?? []).length > 0,
         },
         {
             label: 'Prüfungsfächer auswählen',

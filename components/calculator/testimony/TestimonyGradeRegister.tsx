@@ -50,8 +50,9 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
                     <Grid item xs={6}>
                         <TextField
                             value={grade.subject}
+                            type="text"
                             label="Subject"
-                            onChange={(e) => updateGrade(i, e.target.value, grade.grade)}
+                            onChange={(e) => updateGrade(i, `${e.target.value}`, grade.grade)}
                         />
                     </Grid>
                     <Grid item xs={6}>

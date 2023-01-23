@@ -42,20 +42,6 @@ export default function Home() {
                   </CardContent>
               </Card>
           </Grid>
-          <Grid
-              item
-              xs={12}
-              container
-              direction="row"
-              justifyContent="center"
-          >
-              <Grid item xs={6}>
-                  <Button variant="contained" color="primary" size="large">
-                      <Calculate /> &nbsp;
-                      Zum Rechner
-                  </Button>
-              </Grid>
-          </Grid>
       </Grid>
   );
 }

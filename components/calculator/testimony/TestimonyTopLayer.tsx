@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Grid} from "@mui/material";
 import TestimonySideList from "./TestimonySideList";
 
@@ -27,10 +27,12 @@ interface TestimonyTopLayerProps {
 
 const TestimonyTopLayer: React.FC<TestimonyTopLayerProps> = ({testimonies, setTestimonies}) => {
 
+    const [currentTestimony, setCurrentTestimony] = useState<number>(-1);
+
 
     return (
         <Grid item xs={10} container direction="row" spacing={2}>
-            <TestimonySideList testimonies={testimonies} setTestimonies={setTestimonies}/>
+            <TestimonySideList testimonies={testimonies} setTestimonies={setTestimonies} setCurrentTestimony={setCurrentTestimony}/>
         </Grid>
     );
 }

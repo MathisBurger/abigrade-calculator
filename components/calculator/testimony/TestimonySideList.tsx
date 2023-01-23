@@ -7,10 +7,11 @@ import AddTestimonyDialog from "./AddTestimonyDialog";
 interface TestimonySideListProps {
     testimonies: Testimony[];
     setTestimonies: (testomonies: Testimony[]) => void;
+    setCurrentTestimony: (id: number) => void;
 }
 
 
-const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTestimonies}) => {
+const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTestimonies, setCurrentTestimony}) => {
 
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
@@ -20,8 +21,8 @@ const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTe
                 <Card elevation={1}>
                     <CardContent style={{padding: 0}}>
                         <MenuList>
-                            {testimonies.map((testimony) => (
-                                <MenuItem key={testimony.name}>
+                            {testimonies.map((testimony, i) => (
+                                <MenuItem key={testimony.name} onClick={() => setCurrentTestimony(i)}>
                                     <ListItemText>{testimony.name}</ListItemText>
                                     <Typography variant="body2" color="text.secondary">
                                         {testimony.semester}

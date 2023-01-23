@@ -3,15 +3,18 @@ import {Grid, Typography} from "@mui/material";
 import {useState} from "react";
 import StepperProcess, {StepperProcessStep} from "../components/calculator/StepperProcess";
 import ProvinceSelect, {Province} from "../components/calculator/inputs/ProvinceSelect";
+import TestimonyTopLayer, {Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
 
 interface CalculationValues {
     province?: Province;
+    testomonies?: Testimony[];
 }
 
 const Calculator: NextPage = () => {
 
     const [calculationValues, setCalculationValues] = useState<CalculationValues>({
-        province: Province.SchleswigHolstein
+        province: Province.SchleswigHolstein,
+        testomonies: []
     });
 
     const steps: StepperProcessStep[] = [
@@ -26,7 +29,10 @@ const Calculator: NextPage = () => {
         },
         {
             label: 'Zeugnisse hinterlegen',
-            component: <div />,
+            component: <TestimonyTopLayer
+                testimonies={calculationValues.testomonies ?? []}
+                setTestimonies={(testomonies) => setCalculationValues({...calculationValues, testomonies})}
+            />,
             checkCanSubmit: () => true,
         },
         {

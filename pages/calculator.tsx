@@ -41,6 +41,11 @@ const Calculator: NextPage = () => {
             checkCanSubmit: () => true,
         },
         {
+            label: 'Vorabi und Abi Ergebnisse hinterlegen',
+            component: <div />,
+            checkCanSubmit: () => true,
+        },
+        {
             label: 'Vorabi Ergebnisse angeben',
             component: <div />,
             checkCanSubmit: () => true,

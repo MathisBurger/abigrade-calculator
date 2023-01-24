@@ -38,6 +38,9 @@ export default function Home() {
                           die Noten mehrerer Zeugnisse hinterlegt werden. Wenn ein Halbjahr fehlt, kann man dieses einfach
                           anhand der anderen Zeugnisse errechnen lassen. Final wird dann der optimale Abischnitt berechnet
                           und alle Schritte der Berechnung offengelegt.
+                          Aber Achtung, der Rechner beachtet nicht, die Wahl der Prüfungsfächer. Man kann also in der Theorie
+                          zwei mal Mathe als Kernfach wählen, obwohl dies eigentlich nicht möglich ist. Hier wird also auf die
+                          richtige Fächerwahl des Nutzers gesetzt.
                       </Typography>
                   </CardContent>
               </Card>

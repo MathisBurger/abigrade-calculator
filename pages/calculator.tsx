@@ -4,10 +4,12 @@ import {useState} from "react";
 import StepperProcess, {StepperProcessStep} from "../components/calculator/StepperProcess";
 import ProvinceSelect, {Province} from "../components/calculator/inputs/ProvinceSelect";
 import TestimonyTopLayer, {Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
+import ExamSubjectSelection, {ExamSubjects} from "../components/calculator/ExamSubjectSelection";
 
 interface CalculationValues {
     province?: Province;
     testomonies?: Testimony[];
+    examSubjects?: ExamSubjects;
 }
 
 const Calculator: NextPage = () => {
@@ -37,8 +39,12 @@ const Calculator: NextPage = () => {
         },
         {
             label: 'Prüfungsfächer auswählen',
-            component: <div />,
-            checkCanSubmit: () => true,
+            component: <ExamSubjectSelection
+                testimonies={calculationValues.testomonies ?? []}
+                examSubjects={calculationValues.examSubjects}
+                setExamSubjects={(examSubjects) => setCalculationValues({...calculationValues, examSubjects})}
+            />,
+            checkCanSubmit: () => calculationValues.examSubjects !== undefined,
         },
         {
             label: 'Vorabi und Abi Ergebnisse hinterlegen',

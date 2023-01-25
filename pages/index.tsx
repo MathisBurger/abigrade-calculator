@@ -2,11 +2,14 @@ import React, {useEffect} from "react";
 import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import {Calculate} from "@mui/icons-material";
 import {useRouter} from "next/router";
+import { useTranslation } from "react-i18next";
+import { useIntl } from "react-intl";
 
 
 export default function Home() {
 
     const router = useRouter();
+    const {formatMessage} = useIntl();
 
     useEffect(() => {
         if (router.pathname === '/') {
@@ -31,6 +34,7 @@ export default function Home() {
           <Grid item xs={12}>
               <Card style={{backgroundColor: '#ffffff7d'}}>
                   <CardContent>
+                      {formatMessage({id: 'test'})}
                       <Typography paragraph textAlign="center">
                           Der Abinoten-Rechner ist eine einfache Webapplikation, die dazu gebaut wurde,
                           um den Abischnitt eines Nutzers auszurechnen. Es gibt bisher nur Unterstützung für

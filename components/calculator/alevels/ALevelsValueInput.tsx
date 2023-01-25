@@ -7,14 +7,30 @@ import { Grade } from "../testimony/TestimonyTopLayer";
 
 export interface ALevelsValueInputProps {
     results: Grade[];
-    subjects?: (Subject|null)[];
+    examSubjects?: ExamSubjects;
     setALevelsResults: (results: Grade[]) => void;
     title: string;
+    pre: boolean;
 }
 
-const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({subjects, setALevelsResults, title, results}) => {
+const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({examSubjects, setALevelsResults, title, results, pre}) => {
 
     const {formatMessage} = useIntl();
+    const subjects = useMemo<(Subject|null)[]>(
+      () => {
+          let subj = [
+              examSubjects?.profileSubject ?? null,
+              ...(examSubjects?.coreSubjects ?? [])
+          ];
+          if (!pre) {
+              subj.push(examSubjects?.oralSubject ?? null)
+          }
+
+          return subj;
+      },
+      [examSubjects, pre]
+    );
+
 
     return (
         <Grid item xs={6}>
@@ -26,7 +42,7 @@ const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({subjects, setALeve
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
-                            value={results[index]}
+                            value={results[index]?.grade ?? 0}
                             type="number"
                             label={formatMessage({id: 'common.grade'})}
                             onChange={(e) => {

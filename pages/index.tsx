@@ -41,6 +41,8 @@ export default function Home() {
                           Aber Achtung, der Rechner beachtet nicht, die Wahl der Prüfungsfächer. Man kann also in der Theorie
                           zwei mal Mathe als Kernfach wählen, obwohl dies eigentlich nicht möglich ist. Hier wird also auf die
                           richtige Fächerwahl des Nutzers gesetzt.
+                          Desweiteren wird momentan noch keine 5. Vorabi Prüfung unterstützt. Es wird also drauf gesetzt, dass
+                          der Nutzer nur 4 anstelle von 5 Abi-Prüfungen absolviert
                       </Typography>
                   </CardContent>
               </Card>

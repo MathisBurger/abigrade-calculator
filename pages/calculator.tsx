@@ -5,18 +5,24 @@ import StepperProcess, {StepperProcessStep} from "../components/calculator/Stepp
 import ProvinceSelect, {Province} from "../components/calculator/inputs/ProvinceSelect";
 import TestimonyTopLayer, {Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
 import ExamSubjectSelection, {ExamSubjects} from "../components/calculator/ExamSubjectSelection";
+import ALevelsResultsDisplay, {ALevelsResults} from "../components/calculator/ALevelsResultsDisplay";
 
 interface CalculationValues {
     province?: Province;
     testomonies?: Testimony[];
     examSubjects?: ExamSubjects;
+    aLevelsResults: ALevelsResults;
 }
 
 const Calculator: NextPage = () => {
 
     const [calculationValues, setCalculationValues] = useState<CalculationValues>({
         province: Province.SchleswigHolstein,
-        testomonies: []
+        testomonies: [],
+        aLevelsResults: {
+            pre: [0, 0, 0],
+            real: [0, 0, 0, 0]
+        }
     });
 
     const steps: StepperProcessStep[] = [
@@ -48,8 +54,12 @@ const Calculator: NextPage = () => {
         },
         {
             label: 'Vorabi und Abi Ergebnisse hinterlegen',
-            component: <div />,
-            checkCanSubmit: () => true,
+            component: <ALevelsResultsDisplay
+                aLevelResults={calculationValues.aLevelsResults}
+                setALevelsResults={(aLevelsResults) => setCalculationValues({...calculationValues, aLevelsResults})}
+                examSubjects={calculationValues.examSubjects}
+            />,
+            checkCanSubmit: () => calculationValues.aLevelsResults.pre[0] !== 0,
         },
         {
             label: 'Vorabi Ergebnisse angeben',

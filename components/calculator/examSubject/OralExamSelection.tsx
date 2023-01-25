@@ -3,6 +3,7 @@ import {ExamSubjects} from "../ExamSubjectSelection";
 import React, {useMemo} from "react";
 import {Grid, MenuItem, Select, Typography} from "@mui/material";
 import {GetAllSubjects, GetSubjectByName, Subject} from "../../../utils/subject";
+import { useIntl } from "react-intl";
 
 interface OralExamSelectionProps {
     setOralExamSubject: (subject: Subject|null) => void;
@@ -11,6 +12,7 @@ interface OralExamSelectionProps {
 
 const OralExamSelection: React.FC<OralExamSelectionProps> = ({setOralExamSubject, examSubjects}) => {
 
+    const {formatMessage} = useIntl();
     const oralSubjects = useMemo<Subject[]>(
         () => GetAllSubjects()
             .filter((subject) => subject !== examSubjects?.profileSubject)
@@ -20,7 +22,7 @@ const OralExamSelection: React.FC<OralExamSelectionProps> = ({setOralExamSubject
 
     return (
         <Grid item xs={4}>
-            <Typography variant="h4">Mündliche Prüfung</Typography>
+            <Typography variant="h4">{formatMessage({id: 'common.oralExam'})}</Typography>
             <Select
                 value={examSubjects?.oralSubject?.name}
                 onChange={(e) => setOralExamSubject(GetSubjectByName(e.target.value))}

@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {Testimony} from "./TestimonyTopLayer";
 import {Add} from "@mui/icons-material";
 import AddTestimonyDialog from "./AddTestimonyDialog";
+import { useIntl } from "react-intl";
 
 interface TestimonySideListProps {
     testimonies: Testimony[];
@@ -13,6 +14,7 @@ interface TestimonySideListProps {
 
 const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTestimonies, setCurrentTestimony}) => {
 
+    const {formatMessage} = useIntl();
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
     return (
@@ -34,7 +36,7 @@ const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTe
                                     <ListItemIcon>
                                         <Add />
                                     </ListItemIcon>
-                                    <ListItemText>Add</ListItemText>
+                                    <ListItemText>{formatMessage({id: 'action.create'})}</ListItemText>
                                 </MenuItem>
                             )}
                         </MenuList>

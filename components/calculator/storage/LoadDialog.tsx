@@ -2,6 +2,7 @@ import {CalculationValues} from "../../../pages/calculator";
 import React, {useMemo, useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
 import {Province} from "../inputs/ProvinceSelect";
+import { useIntl } from "react-intl";
 
 interface LoadDialogProps {
     setPreset: (values: CalculationValues) => void;
@@ -13,6 +14,7 @@ interface LoadDialogProps {
 
 const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
 
+    const {formatMessage} = useIntl();
     const presets = JSON.parse(localStorage.getItem('presets') ?? '{}');
     const [selected, setSelected] = useState<string>('');
 
@@ -23,7 +25,7 @@ const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Daten laden</DialogTitle>
+            <DialogTitle>{formatMessage({id: 'action.load-data'})}</DialogTitle>
             <DialogContent>
                 <Select
                     value={selected}
@@ -36,10 +38,10 @@ const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" color="info" onClick={onClose}>
-                    Abbrechen
+                    {formatMessage({id: 'action.cancel'})}
                 </Button>
                 <Button variant="contained" color="primary" onClick={onLoad}>
-                    Laden
+                    {formatMessage({id: 'action.load'})}
                 </Button>
             </DialogActions>
         </Dialog>

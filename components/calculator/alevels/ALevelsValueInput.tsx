@@ -2,6 +2,7 @@ import React, {useMemo} from "react";
 import {ExamSubjects} from "../ExamSubjectSelection";
 import {Grid, TextField, Typography} from "@mui/material";
 import {Subject} from "../../../utils/subject";
+import { useIntl } from "react-intl";
 
 export interface ALevelsValueInputProps {
     results: number[];
@@ -13,6 +14,7 @@ export interface ALevelsValueInputProps {
 
 const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({examSubjects, setALevelsResults, title, results, pre}) => {
 
+    const {formatMessage} = useIntl();
     const subjects = useMemo<(Subject|null)[]>(
         () => {
             let subj = [
@@ -40,7 +42,7 @@ const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({examSubjects, setA
                         <TextField
                             value={results[index]}
                             type="number"
-                            label="Grade"
+                            label={formatMessage({id: 'common.grade'})}
                             onChange={(e) => {
                                 let res = [...results];
                                 res[index] = parseInt(e.target.value, 10);

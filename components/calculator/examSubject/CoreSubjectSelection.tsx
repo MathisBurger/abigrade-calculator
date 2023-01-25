@@ -3,6 +3,7 @@ import {Grid, MenuItem, Select, Typography} from "@mui/material";
 import {Testimony} from "../testimony/TestimonyTopLayer";
 import {ExamSubjects} from "../ExamSubjectSelection";
 import {GetAllCoreSubjects, GetSubjectByName, Subject} from "../../../utils/subject";
+import { useIntl } from "react-intl";
 
 interface CoreSubjectSelectionProps {
     setCoreSubjects: (subjects: (Subject|null)[]) => void;
@@ -11,6 +12,7 @@ interface CoreSubjectSelectionProps {
 
 const CoreSubjectSelection: React.FC<CoreSubjectSelectionProps> = ({setCoreSubjects, examSubjects}) => {
 
+    const {formatMessage} = useIntl();
     const coreSubjects = useMemo<Subject[]>(
         () => GetAllCoreSubjects(),
         []
@@ -18,9 +20,8 @@ const CoreSubjectSelection: React.FC<CoreSubjectSelectionProps> = ({setCoreSubje
 
     return (
       <Grid item xs={4}>
-          <Typography variant="h4">Kernfächer</Typography>
+          <Typography variant="h4">{formatMessage({id: 'common.coreSubjects'})}</Typography>
           <Select
-              label="Kernfach 1"
               value={examSubjects?.coreSubjects?.[0]?.name ?? ''}
               onChange={(e) => setCoreSubjects([GetSubjectByName(e.target.value), examSubjects?.coreSubjects?.[1] ?? null])}
               fullWidth
@@ -31,7 +32,6 @@ const CoreSubjectSelection: React.FC<CoreSubjectSelectionProps> = ({setCoreSubje
           </Select>
           {(examSubjects?.coreSubjects?.length ?? 0) > 0 && (
               <Select
-                  label="Kernfach 2"
                   sx={{marginTop: '10px'}}
                   value={examSubjects?.coreSubjects?.[1]?.name ?? ''}
                   onChange={(e) => setCoreSubjects([examSubjects?.coreSubjects?.[0] ?? null, GetSubjectByName(e.target.value)])}

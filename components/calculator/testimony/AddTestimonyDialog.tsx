@@ -1,6 +1,7 @@
 import React, {useMemo, useState} from "react";
 import {Semester, Testimony} from "./TestimonyTopLayer";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, TextField} from "@mui/material";
+import { useIntl } from "react-intl";
 
 
 interface AddTestimonyDialogProps {
@@ -12,6 +13,7 @@ interface AddTestimonyDialogProps {
 
 const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, setTestimonies, open, onClose}) => {
 
+    const {formatMessage} = useIntl();
     const [name, setName] = useState<string>('');
     const [semester, setSemester] = useState<Semester|undefined>();
 
@@ -42,7 +44,7 @@ const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, set
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Testimony</DialogTitle>
+            <DialogTitle>{formatMessage({id: 'action.add-testimony'})}</DialogTitle>
             <DialogContent>
                 <Select
                     value={`${semester ?? ''}`}
@@ -61,7 +63,7 @@ const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, set
                 />
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="primary" onClick={createTestimony}>Create</Button>
+                <Button variant="contained" color="primary" onClick={createTestimony}>{formatMessage({id: 'action.create'})}</Button>
             </DialogActions>
         </Dialog>
     );

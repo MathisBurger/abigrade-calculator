@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {CalculationValues} from "../../../pages/calculator";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
+import { useIntl } from "react-intl";
 
 interface SaveDialogProps {
     data: CalculationValues;
@@ -11,6 +12,7 @@ interface SaveDialogProps {
 const SaveDialog: React.FC<SaveDialogProps> = ({data, open, onClose}) => {
 
     const [name, setName] = useState<string>('');
+    const {formatMessage} = useIntl();
 
     const onSave = () => {
 
@@ -22,7 +24,7 @@ const SaveDialog: React.FC<SaveDialogProps> = ({data, open, onClose}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Daten speichern</DialogTitle>
+            <DialogTitle>{formatMessage({id: 'action.store-data'})}</DialogTitle>
             <DialogContent>
                 <TextField
                     value={name}
@@ -32,10 +34,10 @@ const SaveDialog: React.FC<SaveDialogProps> = ({data, open, onClose}) => {
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" color="info" onClick={onClose}>
-                    Abbrechen
+                    {formatMessage({id: 'action.cancel'})}
                 </Button>
                 <Button variant="contained" color="primary" onClick={onSave}>
-                    Speichern
+                    {formatMessage({id: 'action.save'})}
                 </Button>
             </DialogActions>
         </Dialog>

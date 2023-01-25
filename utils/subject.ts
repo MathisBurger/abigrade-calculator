@@ -102,6 +102,11 @@ const SUBJECTS: Subject[] = [
         name: 'Philosophie',
         coreSubject: false,
         type: SubjectType.Society
+    },
+    {
+        name: 'Sport',
+        coreSubject: false,
+        type: SubjectType.Others
     }
 ];
 
@@ -110,3 +115,5 @@ export const GetAllSubjects = (): Subject[] => SUBJECTS;
 export const GetAllCoreSubjects = (): Subject[] => SUBJECTS.filter((s) => s.coreSubject);
 
 export const GetSubjectByName = (name: string): Subject|null => SUBJECTS.filter((s) => s.name === name)[0] ?? null;
+
+export const GetAllScienceSubjects = (): (Subject|null)[] => SUBJECTS.filter((s) => s.type === SubjectType.Science);

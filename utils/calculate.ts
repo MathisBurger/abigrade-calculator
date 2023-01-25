@@ -2,6 +2,7 @@ import {CalculationValues} from "../pages/calculator";
 import {Grade, Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
 import {ExamSubjects} from "../components/calculator/ExamSubjectSelection";
 import {GetAverage} from "./average";
+import {GetAllScienceSubjects, GetSubjectByName, Subject} from "./subject";
 
 export interface CalculateValueResult {
     points: number;
@@ -60,7 +61,7 @@ export const CalculateALevelsResult = (values: CalculationValues): CalculateValu
     return {
         grade: GetAverage(points),
         points,
-        combination: allGrades
+        combination : allGrades
     }
 }
 
@@ -112,8 +113,8 @@ const extraCoreSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): C
 }
 
 const scienceSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
-    const scienceSubjects = getScienceSubjects();
-    if (scienceSubjects.indexOf(core?.profileSubject ?? '') > -1) {
+    const scienceSubjects = GetAllScienceSubjects();
+    if (scienceSubjects.indexOf(core?.profileSubject ?? null) > -1) {
         return [[], testimonies];
     }
     const scienceGrades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies)
@@ -168,7 +169,7 @@ const getAestaticGrades = (testimonies: Testimony[]): Calculation => {
 const getHistoryGrades = (testimonies: Testimony[]): Calculation => {
     let historyGrades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies);
     historyGrades = historyGrades
-        .filter((g) => g.subject === 'Geschichte');
+        .filter((g) => g.subject === GetSubjectByName('Geschichte'));
     historyGrades = historyGrades.slice(0, 2);
     let tms = [...testimonies];
     for (let element of historyGrades) {
@@ -185,7 +186,7 @@ const getHistoryGrades = (testimonies: Testimony[]): Calculation => {
 const getGeoWiPoGrades = (testimonies: Testimony[]): Calculation => {
     let grades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies);
     grades = grades
-        .filter((g) => g.subject === 'Geographie' || g.subject === 'Wirtschaftspolitik');
+        .filter((g) => g.subject === GetSubjectByName('Geographie') || g.subject === GetSubjectByName('Wirtschaftspolitik'));
     grades = grades.slice(0, 2);
     let tms = [...testimonies];
     for (let element of grades) {
@@ -202,7 +203,7 @@ const getGeoWiPoGrades = (testimonies: Testimony[]): Calculation => {
 const getReliPhiloGrades = (testimonies: Testimony[]): Calculation => {
     let grades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies);
     grades = grades
-        .filter((g) => g.subject === 'Religion' || g.subject === 'Philosophie');
+        .filter((g) => g.subject === GetSubjectByName('Religion') || g.subject === GetSubjectByName('Philosophie'));
     grades = grades.slice(0, 2);
     let tms = [...testimonies];
     for (let element of grades) {
@@ -216,15 +217,17 @@ const getReliPhiloGrades = (testimonies: Testimony[]): Calculation => {
     ];
 }
 
-const getMissingCoreSubject = (core: string[]): string => {
+const getMissingCoreSubject = (core: (Subject|null)[]): Subject|null => {
 
-    if (core.indexOf('Deutsch') === -1) return 'Deutsch';
-    if (core.indexOf('Englisch') === -1) return 'Englisch';
-    if (core.indexOf('Mathe') === -1) return 'Mathe';
-    return '';
+    const deutsch = GetSubjectByName('Deutsch');
+    const englisch = GetSubjectByName('Englisch');
+    const mathe = GetSubjectByName('Mathematik');
+    if (core.indexOf(deutsch) === -1) return deutsch;
+    if (core.indexOf(englisch) === -1) return englisch;
+    if (core.indexOf(mathe) === -1) return mathe;
+    return mathe;
 }
 
-const getScienceSubjects = () => ['Physik', 'Mathe', 'Biologie', 'Chemie', 'Informatik'];
 
 const getAllGradesFromTestamonies = (testamonies: Testimony[]): ExtendedGrade[] => {
     let grades: ExtendedGrade[] = [];
@@ -244,17 +247,20 @@ const getAllGradesFromTestamonies = (testamonies: Testimony[]): ExtendedGrade[] 
     return grades;
 }
 
-const findAestaticSubject = (testimony: Testimony): string => {
-    if (testimony?.grades.filter((g) => g.subject === 'Kunst').length > 0) return 'Kunst';
-    if (testimony?.grades.filter((g) => g.subject === 'Musik').length > 0) return 'Musik';
-    if (testimony?.grades.filter((g) => g.subject === 'Darstellendes Spiel').length > 0) return 'Darstellendes Spiel';
-    return '';
+const findAestaticSubject = (testimony: Testimony): Subject|null => {
+    const kunst = GetSubjectByName('Kunst');
+    const musik = GetSubjectByName('Musik');
+    const dsp = GetSubjectByName('Darstellendes Spiel');
+    if (testimony?.grades.filter((g) => g.subject === kunst).length > 0) return kunst;
+    if (testimony?.grades.filter((g) => g.subject === musik).length > 0) return musik;
+    if (testimony?.grades.filter((g) => g.subject === dsp).length > 0) return dsp;
+    return dsp;
 }
 
 const removeWorstPEGradeFromGrades = (grades: Grade[]): Grade[] => {
     let reversed = grades.reverse();
     for (let grade of reversed) {
-        if (grade.subject === 'Sport') {
+        if (grade.subject === GetSubjectByName('Sport')) {
             const index = reversed.indexOf(grade);
             return reversed.filter((_, i) => i !== index).reverse();
         }

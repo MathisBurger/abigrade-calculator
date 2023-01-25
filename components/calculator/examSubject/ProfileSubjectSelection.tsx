@@ -2,42 +2,42 @@ import React, {useMemo} from "react";
 import {Grid, MenuItem, Select, Typography} from "@mui/material";
 import {Testimony} from "../testimony/TestimonyTopLayer";
 import {ExamSubjects} from "../ExamSubjectSelection";
+import {GetAllSubjects, GetSubjectByName, Subject} from "../../../utils/subject";
 
 interface ProfileSubjectSelectionProps {
-    testimonies: Testimony[];
-    setProfileSubject: (subject: string) => void;
-    setProfileExtendingSubject: (subject: string) => void;
+    setProfileSubject: (subject: Subject|null) => void;
+    setProfileExtendingSubject: (subject: Subject|null) => void;
     examSubjects?: ExamSubjects;
 }
 
-const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({testimonies, setProfileSubject, examSubjects, setProfileExtendingSubject}) => {
+const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setProfileSubject, examSubjects, setProfileExtendingSubject}) => {
 
-    const profileSubjects = useMemo<string[]>(
-        () => testimonies[0].grades.map((grade) => grade.subject),
-        [testimonies]
+    const profileSubjects = useMemo<Subject[]>(
+        () => GetAllSubjects(),
+        []
     );
 
     return (
         <Grid item xs={4}>
             <Typography variant="h4">Profilfach</Typography>
             <Select
-                value={examSubjects?.profileSubject}
-                onChange={(e) => setProfileSubject(e.target.value)}
+                value={examSubjects?.profileSubject?.name}
+                onChange={(e) => setProfileSubject(GetSubjectByName(e.target.value))}
                 fullWidth
             >
-                {profileSubjects.map((subject) => (
-                    <MenuItem value={subject} key={subject}>{subject}</MenuItem>
+                {profileSubjects.map(({name}) => (
+                    <MenuItem value={name} key={name}>{name}</MenuItem>
                 ))}
             </Select>
             <Select
-                value={examSubjects?.profileExtendingSubject}
-                onChange={(e) => setProfileExtendingSubject(e.target.value)}
+                value={examSubjects?.profileExtendingSubject?.name}
+                onChange={(e) => setProfileExtendingSubject(GetSubjectByName(e.target.value))}
                 fullWidth
                 label="Profilergänzend"
                 sx={{marginTop: '10px'}}
             >
-                {profileSubjects.map((subject) => (
-                    <MenuItem value={subject} key={subject}>{subject}</MenuItem>
+                {profileSubjects.map(({name}) => (
+                    <MenuItem value={name} key={name}>{name}</MenuItem>
                 ))}
             </Select>
         </Grid>

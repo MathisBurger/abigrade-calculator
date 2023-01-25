@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Grid} from "@mui/material";
 import TestimonySideList from "./TestimonySideList";
 import TestimonyGradeRegister from "./TestimonyGradeRegister";
+import {Subject} from "../../../utils/subject";
 
 export enum Semester {
     Q1_1 = "Q1.1",
@@ -11,7 +12,7 @@ export enum Semester {
 }
 
 export interface Grade {
-    subject: string;
+    subject: Subject|null;
     grade: number;
 }
 

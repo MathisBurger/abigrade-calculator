@@ -4,6 +4,7 @@ import {Testimony} from "./testimony/TestimonyTopLayer";
 import ProfileSubjectSelection from "./examSubject/ProfileSubjectSelection";
 import CoreSubjectSelection from "./examSubject/CoreSubjectSelection";
 import OralExamSelection from "./examSubject/OralExamSelection";
+import {Subject} from "../../utils/subject";
 
 interface ExamSubjectSelectionProps {
     testimonies: Testimony[];
@@ -12,10 +13,10 @@ interface ExamSubjectSelectionProps {
 }
 
 export interface ExamSubjects {
-    profileSubject?: string;
-    profileExtendingSubject?: string;
-    coreSubjects?: string[];
-    oralSubject?: string;
+    profileSubject?: Subject|null;
+    profileExtendingSubject?: Subject|null;
+    coreSubjects?: (Subject|null)[];
+    oralSubject?: Subject|null;
 }
 
 const ExamSubjectSelection: React.FC<ExamSubjectSelectionProps> = ({testimonies, examSubjects, setExamSubjects}) => {
@@ -23,18 +24,15 @@ const ExamSubjectSelection: React.FC<ExamSubjectSelectionProps> = ({testimonies,
     return (
         <Grid item xs={10} container direction="row" spacing={2}>
             <ProfileSubjectSelection
-                testimonies={testimonies}
                 examSubjects={examSubjects}
                 setProfileSubject={(subj) => setExamSubjects({...examSubjects, profileSubject: subj})}
                 setProfileExtendingSubject={(subj) => setExamSubjects({...examSubjects, profileExtendingSubject: subj})}
             />
             <CoreSubjectSelection
-                testimonies={testimonies}
                 setCoreSubjects={(subjects) => setExamSubjects({...examSubjects, coreSubjects: subjects})}
                 examSubjects={examSubjects}
             />
             <OralExamSelection
-                testimonies={testimonies}
                 setOralExamSubject={(subj) => setExamSubjects({...examSubjects, oralSubject: subj})}
                 examSubjects={examSubjects}
             />

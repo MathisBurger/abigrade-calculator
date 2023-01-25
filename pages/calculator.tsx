@@ -9,6 +9,7 @@ import ALevelsResultsDisplay, {ALevelsResults} from "../components/calculator/AL
 import SaveDialog from "../components/calculator/storage/SaveDialog";
 import LoadDialog from "../components/calculator/storage/LoadDialog";
 import {CalculateALevelsResult} from "../utils/calculate";
+import FinalResultDisplay from "../components/calculator/FinalResultDisplay";
 
 export interface CalculationValues {
     province?: Province;
@@ -70,13 +71,9 @@ const Calculator: NextPage = () => {
         },
         {
             label: 'Vorabi Ergebnisse angeben',
-            component: (
-                <div>
-                    {activeStep === 4 && (
-                        <div>{CalculateALevelsResult(calculationValues).points}</div>
-                    )}
-                </div>
-            ),
+            component: activeStep === 4 ? (
+                <FinalResultDisplay values={calculationValues} />
+                ) : null,
             checkCanSubmit: () => true,
         }
     ];

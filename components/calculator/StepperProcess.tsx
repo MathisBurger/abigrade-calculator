@@ -4,7 +4,7 @@ import {ArrowBack, ArrowCircleRight, ArrowLeft, ArrowRight} from "@mui/icons-mat
 
 export interface StepperProcessStep {
     label: string;
-    component: JSX.Element;
+    component: JSX.Element|null;
     checkCanSubmit: () => boolean;
 }
 

@@ -1,10 +1,12 @@
 import {CalculationValues} from "../pages/calculator";
 import {Grade, Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
 import {ExamSubjects} from "../components/calculator/ExamSubjectSelection";
+import {GetAverage} from "./average";
 
 export interface CalculateValueResult {
     points: number;
-    grade: number;
+    grade: string;
+    combination: Grade[];
 }
 
 interface ExtendedGrade extends Grade {
@@ -56,8 +58,9 @@ export const CalculateALevelsResult = (values: CalculationValues): CalculateValu
     points += blockTwoPoints * (40/36);
 
     return {
-        grade: 15,
-        points
+        grade: GetAverage(points),
+        points,
+        combination: allGrades
     }
 }
 

@@ -8,6 +8,7 @@ import ExamSubjectSelection, {ExamSubjects} from "../components/calculator/ExamS
 import ALevelsResultsDisplay, {ALevelsResults} from "../components/calculator/ALevelsResultsDisplay";
 import SaveDialog from "../components/calculator/storage/SaveDialog";
 import LoadDialog from "../components/calculator/storage/LoadDialog";
+import {CalculateALevelsResult} from "../utils/calculate";
 
 export interface CalculationValues {
     province?: Province;
@@ -68,7 +69,11 @@ const Calculator: NextPage = () => {
         },
         {
             label: 'Vorabi Ergebnisse angeben',
-            component: <div />,
+            component: (
+                <div>
+                    {CalculateALevelsResult(calculationValues).points}
+                </div>
+            ),
             checkCanSubmit: () => true,
         }
     ];

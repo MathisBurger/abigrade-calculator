@@ -13,6 +13,7 @@ interface ExamSubjectSelectionProps {
 
 export interface ExamSubjects {
     profileSubject?: string;
+    profileExtendingSubject?: string;
     coreSubjects?: string[];
     oralSubject?: string;
 }
@@ -25,6 +26,7 @@ const ExamSubjectSelection: React.FC<ExamSubjectSelectionProps> = ({testimonies,
                 testimonies={testimonies}
                 examSubjects={examSubjects}
                 setProfileSubject={(subj) => setExamSubjects({...examSubjects, profileSubject: subj})}
+                setProfileExtendingSubject={(subj) => setExamSubjects({...examSubjects, profileExtendingSubject: subj})}
             />
             <CoreSubjectSelection
                 testimonies={testimonies}

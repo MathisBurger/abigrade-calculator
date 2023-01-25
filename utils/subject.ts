@@ -54,7 +54,7 @@ const SUBJECTS: Subject[] = [
         type: SubjectType.Others
     },
     {
-        name: 'Mathe',
+        name: 'Mathematik',
         coreSubject: true,
         type: SubjectType.Science
     },

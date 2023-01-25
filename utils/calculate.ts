@@ -51,7 +51,7 @@ export const CalculateALevelsResult = (values: CalculationValues): CalculateValu
 
     let blockTwoPoints = 0;
     for (let grade of allGrades) {
-        blockTwoPoints += grade.grade;
+        blockTwoPoints += grade?.grade ?? 0;
     }
     points += blockTwoPoints * (40/36);
 
@@ -62,7 +62,7 @@ export const CalculateALevelsResult = (values: CalculationValues): CalculateValu
 }
 
 const getALevelSubjGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
-    const selectedCoreSubjects = (core.coreSubjects ?? []);
+    const selectedCoreSubjects = (core?.coreSubjects ?? []);
     let grades = [];
     for (let subj of selectedCoreSubjects) {
         for (let testimony of testimonies) {
@@ -92,7 +92,7 @@ const getALevelSubjGrades = (testimonies: Testimony[], core: ExamSubjects): Calc
 }
 
 const extraCoreSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
-    const selectedCoreSubjects = (core.coreSubjects ?? []);
+    const selectedCoreSubjects = (core?.coreSubjects ?? []);
     const missingCoreSubject = getMissingCoreSubject(selectedCoreSubjects);
     let grades = [];
     for (let testimony of testimonies) {
@@ -110,7 +110,7 @@ const extraCoreSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): C
 
 const scienceSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
     const scienceSubjects = getScienceSubjects();
-    if (scienceSubjects.indexOf(core.profileSubject ?? '') > -1) {
+    if (scienceSubjects.indexOf(core?.profileSubject ?? '') > -1) {
         return [[], testimonies];
     }
     const scienceGrades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies)
@@ -131,7 +131,7 @@ const scienceSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Cal
 }
 
 const getProfileExtendingGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
-    const profileExtending = core.profileExtendingSubject ?? '';
+    const profileExtending = core?.profileExtendingSubject ?? '';
     let grades = [];
     for (let testimony of testimonies) {
         grades.push(testimony.grades.filter((g) => g.subject === profileExtending)[0])
@@ -242,9 +242,9 @@ const getAllGradesFromTestamonies = (testamonies: Testimony[]): ExtendedGrade[] 
 }
 
 const findAestaticSubject = (testimony: Testimony): string => {
-    if (testimony.grades.filter((g) => g.subject === 'Kunst').length > 0) return 'Kunst';
-    if (testimony.grades.filter((g) => g.subject === 'Musik').length > 0) return 'Musik';
-    if (testimony.grades.filter((g) => g.subject === 'Darstellendes Spiel').length > 0) return 'Darstellendes Spiel';
+    if (testimony?.grades.filter((g) => g.subject === 'Kunst').length > 0) return 'Kunst';
+    if (testimony?.grades.filter((g) => g.subject === 'Musik').length > 0) return 'Musik';
+    if (testimony?.grades.filter((g) => g.subject === 'Darstellendes Spiel').length > 0) return 'Darstellendes Spiel';
     return '';
 }
 

@@ -30,6 +30,7 @@ const Calculator: NextPage = () => {
     });
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
     const [loadDialogOpen, setLoadDialogOpen] = useState<boolean>(false);
+    const [activeStep, setActiveStep] = useState<number>(0);
 
     const steps: StepperProcessStep[] = [
         {
@@ -71,14 +72,14 @@ const Calculator: NextPage = () => {
             label: 'Vorabi Ergebnisse angeben',
             component: (
                 <div>
-                    {CalculateALevelsResult(calculationValues).points}
+                    {activeStep === 4 && (
+                        <div>{CalculateALevelsResult(calculationValues).points}</div>
+                    )}
                 </div>
             ),
             checkCanSubmit: () => true,
         }
     ];
-
-    const [activeStep, setActiveStep] = useState<number>(0);
 
     return (
         <>

@@ -1,13 +1,15 @@
 import {NextPage} from "next";
-import {Grid, Typography} from "@mui/material";
+import {Button, Grid, Typography} from "@mui/material";
 import {useState} from "react";
 import StepperProcess, {StepperProcessStep} from "../components/calculator/StepperProcess";
 import ProvinceSelect, {Province} from "../components/calculator/inputs/ProvinceSelect";
 import TestimonyTopLayer, {Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
 import ExamSubjectSelection, {ExamSubjects} from "../components/calculator/ExamSubjectSelection";
 import ALevelsResultsDisplay, {ALevelsResults} from "../components/calculator/ALevelsResultsDisplay";
+import SaveDialog from "../components/calculator/storage/SaveDialog";
+import LoadDialog from "../components/calculator/storage/LoadDialog";
 
-interface CalculationValues {
+export interface CalculationValues {
     province?: Province;
     testomonies?: Testimony[];
     examSubjects?: ExamSubjects;
@@ -19,11 +21,14 @@ const Calculator: NextPage = () => {
     const [calculationValues, setCalculationValues] = useState<CalculationValues>({
         province: Province.SchleswigHolstein,
         testomonies: [],
+        examSubjects: undefined,
         aLevelsResults: {
             pre: [0, 0, 0],
             real: [0, 0, 0, 0]
         }
     });
+    const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
+    const [loadDialogOpen, setLoadDialogOpen] = useState<boolean>(false);
 
     const steps: StepperProcessStep[] = [
         {
@@ -71,14 +76,42 @@ const Calculator: NextPage = () => {
     const [activeStep, setActiveStep] = useState<number>(0);
 
     return (
-        <Grid container direction="row" justifyContent="center" spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant="h3" textAlign="center">
-                    Abi-Noten Rechner
-                </Typography>
+        <>
+            <Grid container direction="row" justifyContent="center" spacing={2}>
+                <Grid item xs={12}>
+                    <Typography variant="h3" textAlign="center">
+                        Abi-Noten Rechner
+                    </Typography>
+                </Grid>
+                <StepperProcess activeStep={activeStep} setActiveStep={setActiveStep} steps={steps} />
+                <Grid item xs={5} container direction="row" justifyContent="center" spacing={2}>
+                    <Grid item xs={6}>
+                        <Button variant="outlined" color="primary" onClick={() => setSaveDialogOpen(true)}>
+                            Save
+                        </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button variant="outlined" color="primary" onClick={() => setLoadDialogOpen(true)}>
+                            Load
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
-            <StepperProcess activeStep={activeStep} setActiveStep={setActiveStep} steps={steps} />
-        </Grid>
+            {saveDialogOpen && (
+                <SaveDialog
+                    data={calculationValues}
+                    open={saveDialogOpen}
+                    onClose={() => setSaveDialogOpen(false)}
+                />
+            )}
+            {loadDialogOpen && (
+                <LoadDialog
+                    setPreset={(preset) => setCalculationValues(preset)}
+                    open={loadDialogOpen}
+                    onClose={() => setLoadDialogOpen(false)}
+                />
+            )}
+        </>
     )
 }
 

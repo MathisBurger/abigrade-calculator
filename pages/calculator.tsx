@@ -9,6 +9,7 @@ import ALevelsResultsDisplay, {ALevelsResults} from "../components/calculator/AL
 import SaveDialog from "../components/calculator/storage/SaveDialog";
 import LoadDialog from "../components/calculator/storage/LoadDialog";
 import FinalResultDisplay from "../components/calculator/FinalResultDisplay";
+import {ValidateExamSubjectsComplete} from "../utils/examSubject";
 
 export interface CalculationValues {
     province?: Province;
@@ -57,7 +58,7 @@ const Calculator: NextPage = () => {
                 examSubjects={calculationValues.examSubjects}
                 setExamSubjects={(examSubjects) => setCalculationValues({...calculationValues, examSubjects})}
             />,
-            checkCanSubmit: () => calculationValues.examSubjects !== undefined,
+            checkCanSubmit: () => ValidateExamSubjectsComplete(calculationValues.examSubjects ?? {}),
         },
         {
             label: 'Vorabi und Abi Ergebnisse hinterlegen',

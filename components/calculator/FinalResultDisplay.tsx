@@ -10,8 +10,10 @@ interface FinalResultDisplayProps {
 
 const FinalResultDisplay: React.FC<FinalResultDisplayProps> = ({values}) => {
 
-    const {grade, points} = CalculateALevelsResult(values);
     const {formatMessage} = useIntl();
+    const {grade, points, calculationGraph} = CalculateALevelsResult(values, formatMessage);
+
+    console.log(calculationGraph);
 
     return (
         <Grid item xs={10} container direction="row" spacing={2}>

@@ -1,45 +1,132 @@
-import {CalculationValues} from "../pages/calculator";
-import {Grade, Testimony} from "../components/calculator/testimony/TestimonyTopLayer";
-import {ExamSubjects} from "../components/calculator/ExamSubjectSelection";
-import {GetAverage} from "./average";
-import {GetAllScienceSubjects, GetSubjectByName, Subject} from "./subject";
+import { CalculationValues } from "../pages/calculator";
+import { Grade, Testimony } from "../components/calculator/testimony/TestimonyTopLayer";
+import { ExamSubjects } from "../components/calculator/ExamSubjectSelection";
+import { GetAverage } from "./average";
+import { GetAllScienceSubjects, GetSubjectByName, Subject } from "./subject";
+import { MessageDescriptor, PrimitiveType } from "react-intl";
+import { FormatXMLElementFn, Options } from "intl-messageformat";
+
+export type MessageTranslator = (descriptor: MessageDescriptor, values?: Record<string, PrimitiveType | FormatXMLElementFn<string, string>> | undefined, opts?: Options | undefined) => string;
 
 export interface CalculateValueResult {
     points: number;
     grade: string;
-    combination: Grade[];
+    calculationGraph: CalculationGraph;
 }
 
 interface ExtendedGrade extends Grade {
     testimonyIndex: number;
 }
 
+export interface CalculationGraph {
+    grade?: Grade;
+    description: string;
+    children?: CalculationGraph[];
+}
+
 type Calculation = [Grade[], Testimony[]];
 
 
-export const CalculateALevelsResult = (values: CalculationValues): CalculateValueResult => {
+export const CalculateALevelsResult = (values: CalculationValues, formatMessage: MessageTranslator): CalculateValueResult => {
+
+    let rootGraphElement: CalculationGraph = {description: formatMessage({id: 'calc.root-graph'})};
 
     let testimonies = values.testomonies ?? [];
     let points = 0;
+    let examElement: CalculationGraph = {description: formatMessage({id: 'calc.exam-graph'}), children: []};
     for (let grade of values.aLevelsResults.real) {
-        points += (grade*5);
+        examElement?.children?.push({
+           description: formatMessage({id: 'calc.abi-exam'}) ,
+            grade: grade
+        });
+        points += (grade.grade*5);
     }
+    updateChildren(rootGraphElement, examElement);
+
+    let testimonyGraphElement = {
+        children: [],
+        description: formatMessage({id: 'calc.subjects'})
+    };
+
     const [aLevelGrades, aLevelSubjTestimonies] =
         getALevelSubjGrades(testimonies, values.examSubjects!);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.abi-subjects'}),
+        children: aLevelGrades.map((g) => ({
+            description: formatMessage({id: 'calc.abi-subject'}),
+            grade: g
+        }))
+    });
+
     const [missingCoreGrades, missingCoreSubjTestimonies] =
         extraCoreSubjectGrades(aLevelSubjTestimonies, values.examSubjects!);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.missing-cores'}),
+        children: missingCoreGrades.map((g) => ({
+            description: formatMessage({id: 'calc.missing-core'}),
+            grade: g
+        }))
+    });
+
     const [scienceGrades, scienceGradesTestimonies] =
         scienceSubjectGrades(missingCoreSubjTestimonies, values.examSubjects!);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.sciences'}),
+        children: scienceGrades.map((g) => ({
+            description: formatMessage({id: 'calc.science'}),
+            grade: g
+        }))
+    });
+
     const [profileExtendingGrades, profileExtendingTestimonies] =
         getProfileExtendingGrades(scienceGradesTestimonies, values.examSubjects!);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.profileExtentendings'}),
+        children: profileExtendingGrades.map((g) => ({
+            description: formatMessage({id: 'calc.profileExtending'}),
+            grade: g
+        }))
+    });
+
     const [aestaticGrades, aestaticTestamonies] =
         getAestaticGrades(profileExtendingTestimonies);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.aestatics'}),
+        children: aestaticGrades.map((g) => ({
+            description: formatMessage({id: 'calc.aestatic'}),
+            grade: g
+        }))
+    });
+
     const [historyGrades, historyTestimonies] =
         getHistoryGrades(aestaticTestamonies);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.histories'}),
+        children: historyGrades.map((g) => ({
+            description: formatMessage({id: 'calc.history'}),
+            grade: g
+        }))
+    });
+
     const [geoWipoGrades, geoWipoTestimonies] =
         getGeoWiPoGrades(historyTestimonies);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.geoWipo'}),
+        children: geoWipoGrades.map((g) => ({
+            description: formatMessage({id: 'calc.geoWipo'}),
+            grade: g
+        }))
+    });
+
     const [reliPhiloGrades, reliPhiloTestimonies] =
         getReliPhiloGrades(geoWipoTestimonies);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.reliPhilo'}),
+        children: reliPhiloGrades.map((g) => ({
+            description: formatMessage({id: 'calc.reliPhilo'}),
+            grade: g
+        }))
+    });
 
     const grades = [
         ...aLevelGrades, ...missingCoreGrades,
@@ -50,7 +137,19 @@ export const CalculateALevelsResult = (values: CalculationValues): CalculateValu
     const resultsWithAllPE = getAllGradesFromTestamonies(reliPhiloTestimonies);
     const withoutPE = removeWorstPEGradeFromGrades(resultsWithAllPE);
     const missing = 36 - grades.length;
-    const allGrades = [...grades, ...(withoutPE.splice(0, missing))];
+    const extraGrades = withoutPE.splice(0, missing);
+    updateChildren(testimonyGraphElement, {
+        description: formatMessage({id: 'calc.extraSubjects'}),
+        children: extraGrades.map((g) => ({
+            description: formatMessage({id: 'calc.extraSubject'}),
+            grade: g
+        }))
+    });
+
+    updateChildren(rootGraphElement, testimonyGraphElement);
+
+
+    const allGrades = [...grades, ...extraGrades];
 
     let blockTwoPoints = 0;
     for (let grade of allGrades) {
@@ -61,8 +160,13 @@ export const CalculateALevelsResult = (values: CalculationValues): CalculateValu
     return {
         grade: GetAverage(points),
         points,
-        combination : allGrades
+        calculationGraph: rootGraphElement
     }
+}
+
+const updateChildren = (el: CalculationGraph, new_el: CalculationGraph): CalculationGraph => {
+    el.children = [...(el.children ?? []), new_el];
+    return el;
 }
 
 const getALevelSubjGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {

@@ -28,8 +28,8 @@ const Calculator: NextPage = () => {
         testomonies: [],
         examSubjects: undefined,
         aLevelsResults: {
-            pre: [0, 0, 0],
-            real: [0, 0, 0, 0]
+            pre: [],
+            real: []
         }
     });
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
@@ -70,7 +70,7 @@ const Calculator: NextPage = () => {
                 setALevelsResults={(aLevelsResults) => setCalculationValues({...calculationValues, aLevelsResults})}
                 examSubjects={calculationValues.examSubjects}
             />,
-            checkCanSubmit: () => calculationValues.aLevelsResults.pre[0] !== 0,
+            checkCanSubmit: () => calculationValues.aLevelsResults.pre.length > 0,
         },
         {
             label: formatMessage({id: 'tab.view-results'}),

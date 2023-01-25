@@ -9,7 +9,7 @@ interface FinalResultDisplayProps {
 
 const FinalResultDisplay: React.FC<FinalResultDisplayProps> = ({values}) => {
 
-    const {grade, points, combination} = CalculateALevelsResult(values);
+    const {grade, points} = CalculateALevelsResult(values);
 
     return (
         <Grid item xs={10} container direction="row" spacing={2}>

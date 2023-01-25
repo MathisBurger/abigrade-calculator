@@ -8,7 +8,6 @@ import ExamSubjectSelection, {ExamSubjects} from "../components/calculator/ExamS
 import ALevelsResultsDisplay, {ALevelsResults} from "../components/calculator/ALevelsResultsDisplay";
 import SaveDialog from "../components/calculator/storage/SaveDialog";
 import LoadDialog from "../components/calculator/storage/LoadDialog";
-import {CalculateALevelsResult} from "../utils/calculate";
 import FinalResultDisplay from "../components/calculator/FinalResultDisplay";
 
 export interface CalculationValues {

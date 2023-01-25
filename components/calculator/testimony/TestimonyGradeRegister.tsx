@@ -2,6 +2,8 @@ import {Testimony} from "./TestimonyTopLayer";
 import React, {useMemo} from "react";
 import {Button, Grid, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
+import SubjectSelect from "../inputs/SubjectSelect";
+import {GetAllSubjects, Subject} from "../../../utils/subject";
 
 export interface TestimonyGradeRegisterProps {
     testimonies: Testimony[];
@@ -27,7 +29,7 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
         setTestimonys(all);
     }
 
-    const updateGrade = (index: number, subject: string, grade: number) => {
+    const updateGrade = (index: number, subject: Subject|null, grade: number) => {
         let testimony = testimonies[testimonyIndex];
         testimony.grades[index] = {subject, grade};
         updateTestimony(testimony);
@@ -35,7 +37,7 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
 
     const addGrade = () => {
         let testimony = testimonies[testimonyIndex];
-        testimony.grades.push({subject: '', grade: 0});
+        testimony.grades.push({subject: GetAllSubjects()[0], grade: 0});
         updateTestimony(testimony);
     }
 
@@ -48,11 +50,9 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
             {testimony.grades.map((grade, i) => (
                 <Grid container direction="row" spacing={2} key={`key-${i}`} sx={{marginTop: '20px'}}>
                     <Grid item xs={6}>
-                        <TextField
-                            value={grade.subject}
-                            type="text"
-                            label="Subject"
-                            onChange={(e) => updateGrade(i, `${e.target.value}`, grade.grade)}
+                        <SubjectSelect
+                            subject={grade.subject}
+                            setSubject={(s) => updateGrade(i, s, grade.grade)}
                         />
                     </Grid>
                     <Grid item xs={6}>

@@ -1,17 +1,36 @@
 import React, {useMemo} from "react";
 import {Grid, MenuItem, Select, Typography} from "@mui/material";
-import {Testimony} from "../testimony/TestimonyTopLayer";
 import {ExamSubjects} from "../ExamSubjectSelection";
 import {GetAllSubjects, GetSubjectByName, Subject} from "../../../utils/subject";
+import { useIntl } from "react-intl";
 
 interface ProfileSubjectSelectionProps {
-    setProfileSubject: (subject: Subject|null) => void;
-    setProfileExtendingSubject: (subject: Subject|null) => void;
-    examSubjects?: ExamSubjects;
+  /**
+   * Sets the profile subject
+   *
+   * @param subject The new profile subject
+   */
+ setProfileSubject: (subject: Subject|null) => void;
+  /**
+   * Sets the extending profile subject
+   *
+   * @param subject The extending profile subject
+   */
+  setProfileExtendingSubject: (subject: Subject|null) => void;
+  /**
+   * All exam subjects that have been set by the user
+   */
+  examSubjects?: ExamSubjects;
 }
 
+/**
+ * Provides selection menus for the profile subject and extending profile subject selection.
+ *
+ * @constructor
+ */
 const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setProfileSubject, examSubjects, setProfileExtendingSubject}) => {
 
+  const {formatMessage} = useIntl();
     const profileSubjects = useMemo<Subject[]>(
         () => GetAllSubjects(),
         []
@@ -19,7 +38,7 @@ const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setPro
 
     return (
         <Grid item xs={4}>
-            <Typography variant="h4">Profilfach</Typography>
+            <Typography variant="h4">{formatMessage({id: 'common.profileSubject'})}</Typography>
             <Select
                 value={examSubjects?.profileSubject?.name}
                 onChange={(e) => setProfileSubject(GetSubjectByName(e.target.value))}
@@ -33,7 +52,7 @@ const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setPro
                 value={examSubjects?.profileExtendingSubject?.name}
                 onChange={(e) => setProfileExtendingSubject(GetSubjectByName(e.target.value))}
                 fullWidth
-                label="Profilergänzend"
+                label={formatMessage({id: 'common.profileExtending'})}
                 sx={{marginTop: '10px'}}
             >
                 {profileSubjects.map(({name}) => (

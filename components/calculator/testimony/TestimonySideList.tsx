@@ -3,16 +3,35 @@ import React, {useState} from "react";
 import {Testimony} from "./TestimonyTopLayer";
 import {Add} from "@mui/icons-material";
 import AddTestimonyDialog from "./AddTestimonyDialog";
+import { useIntl } from "react-intl";
 
 interface TestimonySideListProps {
-    testimonies: Testimony[];
-    setTestimonies: (testomonies: Testimony[]) => void;
-    setCurrentTestimony: (id: number) => void;
+  /**
+   * All testimonies
+   */
+  testimonies: Testimony[];
+  /**
+   * Sets all testimonies
+   *
+   * @param testomonies The testimonies
+   */
+  setTestimonies: (testomonies: Testimony[]) => void;
+  /**
+   * Sets the current testimony
+   *
+   * @param id The index of the testimony
+   */
+  setCurrentTestimony: (id: number) => void;
 }
 
-
+/**
+ * Side bar selection for the current testimony
+ *
+ * @constructor
+ */
 const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTestimonies, setCurrentTestimony}) => {
 
+    const {formatMessage} = useIntl();
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
     return (
@@ -34,7 +53,7 @@ const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTe
                                     <ListItemIcon>
                                         <Add />
                                     </ListItemIcon>
-                                    <ListItemText>Add</ListItemText>
+                                    <ListItemText>{formatMessage({id: 'action.create'})}</ListItemText>
                                 </MenuItem>
                             )}
                         </MenuList>

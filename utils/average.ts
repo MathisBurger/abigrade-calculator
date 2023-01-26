@@ -1,4 +1,8 @@
-
+/**
+ * Gets the average value of your A level
+ *
+ * @param points The amount of points
+ */
 export const GetAverage = (points: number): string => {
     const floored = Math.floor(points);
 

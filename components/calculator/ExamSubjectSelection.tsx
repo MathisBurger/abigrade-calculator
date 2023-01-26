@@ -7,18 +7,46 @@ import OralExamSelection from "./examSubject/OralExamSelection";
 import {Subject} from "../../utils/subject";
 
 interface ExamSubjectSelectionProps {
-    testimonies: Testimony[];
-    examSubjects?: ExamSubjects;
-    setExamSubjects: (subjects: ExamSubjects) => void;
+  /**
+   * All testimonies
+   */
+  testimonies: Testimony[];
+  /**
+   * All exam subjects
+   */
+  examSubjects?: ExamSubjects;
+  /**
+   * Sets the exam subjects
+   *
+   * @param subjects The exam subjects
+   */
+  setExamSubjects: (subjects: ExamSubjects) => void;
 }
 
 export interface ExamSubjects {
-    profileSubject?: Subject|null;
-    profileExtendingSubject?: Subject|null;
-    coreSubjects?: (Subject|null)[];
-    oralSubject?: Subject|null;
+  /**
+   * The profile subject
+   */
+  profileSubject?: Subject|null;
+  /**
+   * The profile extending subject
+   */
+  profileExtendingSubject?: Subject|null;
+  /**
+   * The core subjects
+   */
+  coreSubjects?: (Subject|null)[];
+  /**
+   * The oral subject
+   */
+  oralSubject?: Subject|null;
 }
 
+/**
+ * Provides inputs for selecting the exam subjects
+ *
+ * @constructor
+ */
 const ExamSubjectSelection: React.FC<ExamSubjectSelectionProps> = ({testimonies, examSubjects, setExamSubjects}) => {
 
     return (

@@ -1,34 +1,61 @@
-import {Grid} from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
-import {ExamSubjects} from "./ExamSubjectSelection";
+import { ExamSubjects } from "./ExamSubjectSelection";
 import ALevelsValueInput from "./alevels/ALevelsValueInput";
+import { useIntl } from "react-intl";
+import { Grade } from "./testimony/TestimonyTopLayer";
 
 interface ALevelsResultsDisplayProps {
-    examSubjects?: ExamSubjects;
-    aLevelResults: ALevelsResults;
-    setALevelsResults: (results: ALevelsResults) => void;
+  /**
+   * All exam subjects that have been selected
+   */
+  examSubjects?: ExamSubjects;
+  /**
+   * The a level results
+   */
+  aLevelResults: ALevelsResults;
+  /**
+   * Sets the A level results
+   *
+   * @param results The A level results
+   */
+  setALevelsResults: (results: ALevelsResults) => void;
 }
 
 export interface ALevelsResults {
-    pre: number[];
-    real: number[];
+  /**
+   * The pre grades
+   */
+  pre: Grade[];
+  /**
+   * The real grades
+   */
+  real: Grade[];
 }
 
+/**
+ * Displays all a level results and allows the user to edit them
+ *
+ * @constructor
+ */
 const ALevelsResultsDisplay: React.FC<ALevelsResultsDisplayProps> = ({examSubjects, setALevelsResults, aLevelResults}) => {
+
+    const {formatMessage} = useIntl();
+
 
     return (
         <Grid item xs={10} container direction="row" spacing={2}>
             <ALevelsValueInput
                 results={aLevelResults.pre}
                 setALevelsResults={(res) => setALevelsResults({...aLevelResults, pre: res})}
-                title="Vor-ABI"
+                title={formatMessage({id: 'common.pre-abi'})}
                 examSubjects={examSubjects}
                 pre={true}
             />
             <ALevelsValueInput
                 results={aLevelResults.real}
                 setALevelsResults={(res) => setALevelsResults({...aLevelResults, real: res})}
-                title="ABI"
+                title={formatMessage({id: 'common.abi'})}
                 examSubjects={examSubjects}
                 pre={false}
             />

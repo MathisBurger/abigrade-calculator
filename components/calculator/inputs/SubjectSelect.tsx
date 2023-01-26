@@ -4,12 +4,24 @@ import {GetAllSubjects, GetSubjectByName, Subject} from "../../../utils/subject"
 
 
 interface SubjectSelectProps {
-    subject: Subject|null;
-    setSubject: (province: Subject|null) => void;
+  /**
+   * The subject that has been selected
+   */
+  subject: Subject|null;
+  /**
+   * Sets the selected subject
+   *
+   * @param subject The new subject
+   */
+  setSubject: (subject: Subject|null) => void;
 }
 
+/**
+ * Provides an input that wraps the subject selection menu
+ *
+ * @constructor
+ */
 const SubjectSelect: React.FC<SubjectSelectProps> = ({subject, setSubject}) => {
-
 
     return (
             <Select

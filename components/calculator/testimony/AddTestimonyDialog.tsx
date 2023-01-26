@@ -1,17 +1,38 @@
 import React, {useMemo, useState} from "react";
 import {Semester, Testimony} from "./TestimonyTopLayer";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select, TextField} from "@mui/material";
+import { useIntl } from "react-intl";
 
 
 interface AddTestimonyDialogProps {
-    testimonies: Testimony[];
-    setTestimonies: (testomonies: Testimony[]) => void;
-    open: boolean;
-    onClose: () => void;
+  /**
+   * All testimonies
+   */
+  testimonies: Testimony[];
+  /**
+   * Sets all testimonies
+   *
+   * @param testomonies The testimonies
+   */
+  setTestimonies: (testomonies: Testimony[]) => void;
+  /**
+   * if the dialog is opened
+   */
+  open: boolean;
+  /**
+   * Callback that is executed if the dialog should be closed
+   */
+  onClose: () => void;
 }
 
+/**
+ * Dialog for adding new testimonies
+ *
+ * @constructor
+ */
 const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, setTestimonies, open, onClose}) => {
 
+    const {formatMessage} = useIntl();
     const [name, setName] = useState<string>('');
     const [semester, setSemester] = useState<Semester|undefined>();
 
@@ -42,7 +63,7 @@ const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, set
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Add Testimony</DialogTitle>
+            <DialogTitle>{formatMessage({id: 'action.add-testimony'})}</DialogTitle>
             <DialogContent>
                 <Select
                     value={`${semester ?? ''}`}
@@ -61,7 +82,7 @@ const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, set
                 />
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="primary" onClick={createTestimony}>Create</Button>
+                <Button variant="contained" color="primary" onClick={createTestimony}>{formatMessage({id: 'action.create'})}</Button>
             </DialogActions>
         </Dialog>
     );

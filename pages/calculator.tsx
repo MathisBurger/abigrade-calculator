@@ -10,23 +10,43 @@ import SaveDialog from "../components/calculator/storage/SaveDialog";
 import LoadDialog from "../components/calculator/storage/LoadDialog";
 import FinalResultDisplay from "../components/calculator/FinalResultDisplay";
 import {ValidateExamSubjectsComplete} from "../utils/examSubject";
+import { useIntl } from "react-intl";
 
 export interface CalculationValues {
+    /**
+     * province
+     */
     province?: Province;
+    /**
+     * All testimonies
+     */
     testomonies?: Testimony[];
+    /**
+     * All exam subjects
+     */
     examSubjects?: ExamSubjects;
+    /**
+     * All a level results
+     */
     aLevelsResults: ALevelsResults;
 }
 
+/**
+ * Calculator page
+ *
+ * @constructor
+ */
 const Calculator: NextPage = () => {
+
+    const {formatMessage} = useIntl();
 
     const [calculationValues, setCalculationValues] = useState<CalculationValues>({
         province: Province.SchleswigHolstein,
         testomonies: [],
         examSubjects: undefined,
         aLevelsResults: {
-            pre: [0, 0, 0],
-            real: [0, 0, 0, 0]
+            pre: [],
+            real: []
         }
     });
     const [saveDialogOpen, setSaveDialogOpen] = useState<boolean>(false);
@@ -35,7 +55,7 @@ const Calculator: NextPage = () => {
 
     const steps: StepperProcessStep[] = [
         {
-            label: 'Bundesland auswählen',
+            label: formatMessage({id: 'tab.select-province'}),
             component: <ProvinceSelect
                 province={calculationValues.province ?? Province.SchleswigHolstein}
                 setProvince={(province) => setCalculationValues({...calculationValues, province})}
@@ -44,7 +64,7 @@ const Calculator: NextPage = () => {
 
         },
         {
-            label: 'Zeugnisse hinterlegen',
+            label: formatMessage({id: 'tab.add-testimony'}),
             component: <TestimonyTopLayer
                 testimonies={calculationValues.testomonies ?? []}
                 setTestimonies={(testomonies) => setCalculationValues({...calculationValues, testomonies})}
@@ -52,7 +72,7 @@ const Calculator: NextPage = () => {
             checkCanSubmit: () => (calculationValues?.testomonies ?? []).length > 0,
         },
         {
-            label: 'Prüfungsfächer auswählen',
+            label: formatMessage({id: 'tab.select-exam-subjects'}),
             component: <ExamSubjectSelection
                 testimonies={calculationValues.testomonies ?? []}
                 examSubjects={calculationValues.examSubjects}
@@ -61,16 +81,16 @@ const Calculator: NextPage = () => {
             checkCanSubmit: () => ValidateExamSubjectsComplete(calculationValues.examSubjects ?? {}),
         },
         {
-            label: 'Vorabi und Abi Ergebnisse hinterlegen',
+            label: formatMessage({id: 'tab.written-exams'}),
             component: <ALevelsResultsDisplay
                 aLevelResults={calculationValues.aLevelsResults}
                 setALevelsResults={(aLevelsResults) => setCalculationValues({...calculationValues, aLevelsResults})}
                 examSubjects={calculationValues.examSubjects}
             />,
-            checkCanSubmit: () => calculationValues.aLevelsResults.pre[0] !== 0,
+            checkCanSubmit: () => calculationValues.aLevelsResults.pre.length > 0,
         },
         {
-            label: 'Vorabi Ergebnisse angeben',
+            label: formatMessage({id: 'tab.view-results'}),
             component: activeStep === 4 ? (
                 <FinalResultDisplay values={calculationValues} />
                 ) : null,
@@ -83,19 +103,19 @@ const Calculator: NextPage = () => {
             <Grid container direction="row" justifyContent="center" spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h3" textAlign="center">
-                        Abi-Noten Rechner
+                        {formatMessage({id: 'main-header'})}
                     </Typography>
                 </Grid>
                 <StepperProcess activeStep={activeStep} setActiveStep={setActiveStep} steps={steps} />
                 <Grid item xs={5} container direction="row" justifyContent="center" spacing={2}>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" onClick={() => setSaveDialogOpen(true)}>
-                            Save
+                            {formatMessage({id: 'action.save'})}
                         </Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" onClick={() => setLoadDialogOpen(true)}>
-                            Load
+                            {formatMessage({id: 'action.load'})}
                         </Button>
                     </Grid>
                 </Grid>

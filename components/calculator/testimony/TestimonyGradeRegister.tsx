@@ -4,15 +4,33 @@ import {Button, Grid, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 import SubjectSelect from "../inputs/SubjectSelect";
 import {GetAllSubjects, Subject} from "../../../utils/subject";
+import { useIntl } from "react-intl";
 
 export interface TestimonyGradeRegisterProps {
+    /**
+     * All testimonies
+     */
     testimonies: Testimony[];
+    /**
+     * The current testimony index
+     */
     testimonyIndex: number;
+    /**
+     * Sets all testimonies
+     *
+     * @param testimonies The testimonies
+     */
     setTestimonys: (testimonies: Testimony[]) => void;
 }
 
+/**
+ * Detailed view for adding new grades to a testimony
+ *
+ * @constructor
+ */
 const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimonies, testimonyIndex, setTestimonys}) => {
 
+    const {formatMessage} = useIntl();
     const testimony = useMemo<Testimony|undefined>(
         () => {
             if (testimonyIndex > -1 && testimonies.length > 0) {
@@ -59,14 +77,14 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
                         <TextField
                             value={grade.grade}
                             type="number"
-                            label="Grade"
+                            label={formatMessage({id: 'common.grade'})}
                             onChange={(e) => updateGrade(i, grade.subject, parseInt(`${e.target.value}`, 10))}
                         />
                     </Grid>
                 </Grid>
             ))}
             <Button sx={{marginTop: '20px'}} variant="contained" color="primary" onClick={addGrade}>
-                <Add /> &nbsp; Add
+                <Add /> &nbsp; {formatMessage({id: 'action.create'})}
             </Button>
         </Grid>
     );

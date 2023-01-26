@@ -4,7 +4,7 @@ import {Button, Grid, TextField, Typography} from "@mui/material";
 import {Add} from "@mui/icons-material";
 import SubjectSelect from "../inputs/SubjectSelect";
 import {GetAllSubjects, Subject} from "../../../utils/subject";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 export interface TestimonyGradeRegisterProps {
     /**
@@ -30,7 +30,7 @@ export interface TestimonyGradeRegisterProps {
  */
 const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimonies, testimonyIndex, setTestimonys}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
     const testimony = useMemo<Testimony|undefined>(
         () => {
             if (testimonyIndex > -1 && testimonies.length > 0) {
@@ -77,14 +77,14 @@ const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimon
                         <TextField
                             value={grade.grade}
                             type="number"
-                            label={formatMessage({id: 'common.grade'})}
+                            label={t('common.grade')}
                             onChange={(e) => updateGrade(i, grade.subject, parseInt(`${e.target.value}`, 10))}
                         />
                     </Grid>
                 </Grid>
             ))}
             <Button sx={{marginTop: '20px'}} variant="contained" color="primary" onClick={addGrade}>
-                <Add /> &nbsp; {formatMessage({id: 'action.create'})}
+                <Add /> &nbsp; {t('action.create')}
             </Button>
         </Grid>
     );

@@ -1,7 +1,7 @@
 import {CalculationValues} from "../../../pages/calculator";
 import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 interface LoadDialogProps {
   /**
@@ -27,7 +27,7 @@ interface LoadDialogProps {
  */
 const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
     const presets = JSON.parse(localStorage.getItem('presets') ?? '{}');
     const [selected, setSelected] = useState<string>('');
 
@@ -40,7 +40,7 @@ const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>{formatMessage({id: 'action.load-data'})}</DialogTitle>
+            <DialogTitle>{t('action.load-data')}</DialogTitle>
             <DialogContent>
                 <Select
                     value={selected}
@@ -53,10 +53,10 @@ const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" color="info" onClick={onClose}>
-                    {formatMessage({id: 'action.cancel'})}
+                    {t('action.cancel')}
                 </Button>
                 <Button variant="contained" color="primary" onClick={onLoad}>
-                    {formatMessage({id: 'action.load'})}
+                    {t('action.load')}
                 </Button>
             </DialogActions>
         </Dialog>

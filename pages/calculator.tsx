@@ -10,7 +10,7 @@ import SaveDialog from "../components/calculator/storage/SaveDialog";
 import LoadDialog from "../components/calculator/storage/LoadDialog";
 import FinalResultDisplay from "../components/calculator/FinalResultDisplay";
 import {ValidateExamSubjectsComplete} from "../utils/examSubject";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 export interface CalculationValues {
     /**
@@ -38,7 +38,7 @@ export interface CalculationValues {
  */
 const Calculator: NextPage = () => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
 
     const [calculationValues, setCalculationValues] = useState<CalculationValues>({
         province: Province.SchleswigHolstein,
@@ -55,7 +55,7 @@ const Calculator: NextPage = () => {
 
     const steps: StepperProcessStep[] = [
         {
-            label: formatMessage({id: 'tab.select-province'}),
+            label: t('tab.select-province'),
             component: <ProvinceSelect
                 province={calculationValues.province ?? Province.SchleswigHolstein}
                 setProvince={(province) => setCalculationValues({...calculationValues, province})}
@@ -64,7 +64,7 @@ const Calculator: NextPage = () => {
 
         },
         {
-            label: formatMessage({id: 'tab.add-testimony'}),
+            label: t('tab.add-testimony'),
             component: <TestimonyTopLayer
                 testimonies={calculationValues.testomonies ?? []}
                 setTestimonies={(testomonies) => setCalculationValues({...calculationValues, testomonies})}
@@ -72,7 +72,7 @@ const Calculator: NextPage = () => {
             checkCanSubmit: () => (calculationValues?.testomonies ?? []).length > 0,
         },
         {
-            label: formatMessage({id: 'tab.select-exam-subjects'}),
+            label: t('tab.select-exam-subjects'),
             component: <ExamSubjectSelection
                 testimonies={calculationValues.testomonies ?? []}
                 examSubjects={calculationValues.examSubjects}
@@ -81,7 +81,7 @@ const Calculator: NextPage = () => {
             checkCanSubmit: () => ValidateExamSubjectsComplete(calculationValues.examSubjects ?? {}),
         },
         {
-            label: formatMessage({id: 'tab.written-exams'}),
+            label: t('tab.written-exams'),
             component: <ALevelsResultsDisplay
                 aLevelResults={calculationValues.aLevelsResults}
                 setALevelsResults={(aLevelsResults) => setCalculationValues({...calculationValues, aLevelsResults})}
@@ -90,7 +90,7 @@ const Calculator: NextPage = () => {
             checkCanSubmit: () => calculationValues.aLevelsResults.pre.length > 0,
         },
         {
-            label: formatMessage({id: 'tab.view-results'}),
+            label: t('tab.view-results'),
             component: activeStep === 4 ? (
                 <FinalResultDisplay values={calculationValues} />
                 ) : null,
@@ -103,19 +103,19 @@ const Calculator: NextPage = () => {
             <Grid container direction="row" justifyContent="center" spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h3" textAlign="center">
-                        {formatMessage({id: 'main-header'})}
+                        {t('main-header')}
                     </Typography>
                 </Grid>
                 <StepperProcess activeStep={activeStep} setActiveStep={setActiveStep} steps={steps} />
                 <Grid item xs={5} container direction="row" justifyContent="center" spacing={2}>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" onClick={() => setSaveDialogOpen(true)}>
-                            {formatMessage({id: 'action.save'})}
+                            {t('action.save')}
                         </Button>
                     </Grid>
                     <Grid item xs={6}>
                         <Button variant="outlined" color="primary" onClick={() => setLoadDialogOpen(true)}>
-                            {formatMessage({id: 'action.load'})}
+                            {t('action.load')}
                         </Button>
                     </Grid>
                 </Grid>

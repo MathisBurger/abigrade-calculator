@@ -1,6 +1,6 @@
 import React from "react";
 import {Grid, MenuItem, Select, Typography} from "@mui/material";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 /**
  * All provinces that are currently supported
@@ -29,11 +29,11 @@ interface ProvinceSelectProps {
  */
 const ProvinceSelect: React.FC<ProvinceSelectProps> = ({province, setProvince}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
 
     return (
           <Grid item xs={5}>
-             <Typography variant="h4">{formatMessage({id: 'action.select-province'})}:</Typography>
+             <Typography variant="h4">{t('action.select-province')}:</Typography>
               <Select
                   value={`${province}`}
                   onChange={(e) => setProvince(e.target.value as Province)}

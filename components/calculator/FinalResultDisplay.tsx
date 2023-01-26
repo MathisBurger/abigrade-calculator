@@ -2,8 +2,8 @@ import {CalculationValues} from "../../pages/calculator";
 import React from "react";
 import {Card, CardActions, CardContent, Grid, Typography} from "@mui/material";
 import {CalculateALevelsResult} from "../../utils/calculate";
-import { useIntl } from "react-intl";
 import CalculationGraphView from "./CalculationGraphView";
+import { useTranslation } from "next-export-i18n";
 
 interface FinalResultDisplayProps {
   /**
@@ -19,8 +19,8 @@ interface FinalResultDisplayProps {
  */
 const FinalResultDisplay: React.FC<FinalResultDisplayProps> = ({values}) => {
 
-    const {formatMessage} = useIntl();
-    const {grade, points, calculationGraph} = CalculateALevelsResult(values, formatMessage);
+    const {t} = useTranslation();
+    const {grade, points, calculationGraph} = CalculateALevelsResult(values, t);
 
     return (
         <Grid item xs={10} container direction="row" spacing={2} justifyContent="center">
@@ -30,7 +30,7 @@ const FinalResultDisplay: React.FC<FinalResultDisplayProps> = ({values}) => {
                         <Typography variant="h2">{grade}</Typography>
                     </CardContent>
                     <CardActions style={{ display:'flex', justifyContent:'center' }}>
-                        <Typography paragraph>{formatMessage({id: 'common.with'})} {Math.floor(points)} {formatMessage({id: 'common.points'})}</Typography>
+                        <Typography paragraph>{t('common.with')} {Math.floor(points)} {t('common.points')}</Typography>
                     </CardActions>
                 </Card>
             </Grid>

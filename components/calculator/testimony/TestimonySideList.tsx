@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {Testimony} from "./TestimonyTopLayer";
 import {Add} from "@mui/icons-material";
 import AddTestimonyDialog from "./AddTestimonyDialog";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 interface TestimonySideListProps {
   /**
@@ -31,7 +31,7 @@ interface TestimonySideListProps {
  */
 const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTestimonies, setCurrentTestimony}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
     return (
@@ -53,7 +53,7 @@ const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTe
                                     <ListItemIcon>
                                         <Add />
                                     </ListItemIcon>
-                                    <ListItemText>{formatMessage({id: 'action.create'})}</ListItemText>
+                                    <ListItemText>{t('action.create')}</ListItemText>
                                 </MenuItem>
                             )}
                         </MenuList>

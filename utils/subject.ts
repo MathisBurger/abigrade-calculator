@@ -37,12 +37,12 @@ const SUBJECTS: Subject[] = [
     },
     {
         name: 'Französisch',
-        coreSubject: true,
+        coreSubject: false,
         type: SubjectType.Language
     },
     {
         name: 'Latein',
-        coreSubject: true,
+        coreSubject: false,
         type: SubjectType.Language
     },
     {

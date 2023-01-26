@@ -23,7 +23,7 @@ const CalculationGraphView: React.FC<CalculationGraphViewProps> = ({graph}) => {
   const buildGraph = (calc_graph: CalculationGraph) => {
     if (calc_graph.children) {
       return (
-        <ModifiedTreeItem nodeId={calc_graph.description} label={calc_graph.description}>
+        <ModifiedTreeItem nodeId={calc_graph.description} label={`${calc_graph.description} (${calc_graph.children.length})`}>
           {calc_graph.children.map((c) => buildGraph(c))}
         </ModifiedTreeItem>
       );

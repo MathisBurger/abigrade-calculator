@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
 import {Button, Grid, Step, StepButton, Stepper} from "@mui/material";
-import {ArrowBack, ArrowCircleRight, ArrowLeft, ArrowRight} from "@mui/icons-material";
-import { useIntl } from "react-intl";
+import {ArrowLeft, ArrowRight} from "@mui/icons-material";
+import { useTranslation } from "next-export-i18n";
 
 export interface StepperProcessStep {
     /**
@@ -40,7 +40,7 @@ interface StepperProcessProps {
  */
 const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveStep, steps}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
     const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
     const handleStep = (step: number) => () => setActiveStep(step);
@@ -80,13 +80,13 @@ const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveSte
                 <Grid item xs={3}>
                     <Button color="primary" variant="contained" onClick={handleBackClick}>
                         <ArrowLeft />&nbsp;
-                        {formatMessage({id: 'action.back'})}
+                        {t('action.back')}
                     </Button>
                 </Grid>
                 <Grid item xs={3}>
                     <Button color="primary" variant="contained" onClick={handleNextClick} disabled={!steps[activeStep].checkCanSubmit()}>
                         <ArrowRight />&nbsp;
-                        {formatMessage({id: 'action.next'})}
+                        {t('action.next')}
                     </Button>
                 </Grid>
             </Grid>

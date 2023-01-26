@@ -2,8 +2,8 @@ import React, {useMemo} from "react";
 import {ExamSubjects} from "../ExamSubjectSelection";
 import {Grid, TextField, Typography} from "@mui/material";
 import {Subject} from "../../../utils/subject";
-import { useIntl } from "react-intl";
 import { Grade } from "../testimony/TestimonyTopLayer";
+import { useTranslation } from "next-export-i18n";
 
 export interface ALevelsValueInputProps {
     /**
@@ -38,7 +38,7 @@ export interface ALevelsValueInputProps {
  */
 const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({examSubjects, setALevelsResults, title, results, pre}) => {
 
-    const {formatMessage} = useIntl();
+  const { t } = useTranslation();
     const subjects = useMemo<(Subject|null)[]>(
       () => {
           let subj = [
@@ -67,7 +67,7 @@ const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({examSubjects, setA
                         <TextField
                             value={results[index]?.grade ?? 0}
                             type="number"
-                            label={formatMessage({id: 'common.grade'})}
+                            label={t('common.grade')}
                             onChange={(e) => {
                                 let res = [...results];
                                 res[index] = {subject, grade: parseInt(e.target.value, 10)};

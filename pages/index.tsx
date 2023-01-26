@@ -1,9 +1,7 @@
 import React, {useEffect} from "react";
-import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
-import {Calculate} from "@mui/icons-material";
+import {Card, CardContent, Grid, Typography} from "@mui/material";
 import {useRouter} from "next/router";
-import { useTranslation } from "react-i18next";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 /**
  * Default home page
@@ -13,7 +11,7 @@ import { useIntl } from "react-intl";
 export default function Home() {
 
     const router = useRouter();
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
 
     useEffect(() => {
         if (router.pathname === '/') {
@@ -30,7 +28,7 @@ export default function Home() {
           <Grid item xs={12}>
               <Card style={{backgroundColor: '#ffffff7d'}}>
                   <CardContent>
-                      <Typography variant="h1" textAlign="center">{formatMessage({id: 'main-header'})}</Typography>
+                      <Typography variant="h1" textAlign="center">{t('main-header')}</Typography>
                   </CardContent>
               </Card>
           </Grid>
@@ -39,7 +37,7 @@ export default function Home() {
               <Card style={{backgroundColor: '#ffffff7d'}}>
                   <CardContent>
                       <Typography paragraph textAlign="center">
-                        {formatMessage({id: 'landing-text'})}
+                        {t('landing-text')}
                       </Typography>
                   </CardContent>
               </Card>

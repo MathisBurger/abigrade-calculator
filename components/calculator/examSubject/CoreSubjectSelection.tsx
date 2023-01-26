@@ -1,9 +1,8 @@
 import React, {useMemo} from "react";
 import {Grid, MenuItem, Select, Typography} from "@mui/material";
-import {Testimony} from "../testimony/TestimonyTopLayer";
 import {ExamSubjects} from "../ExamSubjectSelection";
 import {GetAllCoreSubjects, GetSubjectByName, Subject} from "../../../utils/subject";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 interface CoreSubjectSelectionProps {
   /**
@@ -25,7 +24,7 @@ interface CoreSubjectSelectionProps {
  */
 const CoreSubjectSelection: React.FC<CoreSubjectSelectionProps> = ({setCoreSubjects, examSubjects}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
     const coreSubjects = useMemo<Subject[]>(
         () => GetAllCoreSubjects(),
         []
@@ -33,7 +32,7 @@ const CoreSubjectSelection: React.FC<CoreSubjectSelectionProps> = ({setCoreSubje
 
     return (
       <Grid item xs={4}>
-          <Typography variant="h4">{formatMessage({id: 'common.coreSubjects'})}</Typography>
+          <Typography variant="h4">{t('common.coreSubjects')}</Typography>
           <Select
               value={examSubjects?.coreSubjects?.[0]?.name ?? ''}
               onChange={(e) => setCoreSubjects([GetSubjectByName(e.target.value), examSubjects?.coreSubjects?.[1] ?? null])}

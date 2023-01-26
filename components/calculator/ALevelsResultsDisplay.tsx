@@ -2,8 +2,8 @@ import { Grid } from "@mui/material";
 import React from "react";
 import { ExamSubjects } from "./ExamSubjectSelection";
 import ALevelsValueInput from "./alevels/ALevelsValueInput";
-import { useIntl } from "react-intl";
 import { Grade } from "./testimony/TestimonyTopLayer";
+import { useTranslation } from "next-export-i18n";
 
 interface ALevelsResultsDisplayProps {
   /**
@@ -40,7 +40,7 @@ export interface ALevelsResults {
  */
 const ALevelsResultsDisplay: React.FC<ALevelsResultsDisplayProps> = ({examSubjects, setALevelsResults, aLevelResults}) => {
 
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
 
 
     return (
@@ -48,14 +48,14 @@ const ALevelsResultsDisplay: React.FC<ALevelsResultsDisplayProps> = ({examSubjec
             <ALevelsValueInput
                 results={aLevelResults.pre}
                 setALevelsResults={(res) => setALevelsResults({...aLevelResults, pre: res})}
-                title={formatMessage({id: 'common.pre-abi'})}
+                title={t('common.pre-abi')}
                 examSubjects={examSubjects}
                 pre={true}
             />
             <ALevelsValueInput
                 results={aLevelResults.real}
                 setALevelsResults={(res) => setALevelsResults({...aLevelResults, real: res})}
-                title={formatMessage({id: 'common.abi'})}
+                title={t('common.abi')}
                 examSubjects={examSubjects}
                 pre={false}
             />

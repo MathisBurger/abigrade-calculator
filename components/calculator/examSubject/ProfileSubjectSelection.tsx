@@ -1,8 +1,8 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import {Grid, MenuItem, Select, Typography} from "@mui/material";
 import {ExamSubjects} from "../ExamSubjectSelection";
 import {GetAllSubjects, GetSubjectByName, Subject} from "../../../utils/subject";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 interface ProfileSubjectSelectionProps {
   /**
@@ -30,7 +30,7 @@ interface ProfileSubjectSelectionProps {
  */
 const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setProfileSubject, examSubjects, setProfileExtendingSubject}) => {
 
-  const {formatMessage} = useIntl();
+  const {t} = useTranslation();
     const profileSubjects = useMemo<Subject[]>(
         () => GetAllSubjects(),
         []
@@ -38,7 +38,7 @@ const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setPro
 
     return (
         <Grid item xs={4}>
-            <Typography variant="h4">{formatMessage({id: 'common.profileSubject'})}</Typography>
+            <Typography variant="h4">{t('common.profileSubject')}</Typography>
             <Select
                 value={examSubjects?.profileSubject?.name}
                 onChange={(e) => setProfileSubject(GetSubjectByName(e.target.value))}
@@ -52,7 +52,7 @@ const ProfileSubjectSelection: React.FC<ProfileSubjectSelectionProps> = ({setPro
                 value={examSubjects?.profileExtendingSubject?.name}
                 onChange={(e) => setProfileExtendingSubject(GetSubjectByName(e.target.value))}
                 fullWidth
-                label={formatMessage({id: 'common.profileExtending'})}
+                label={t('common.profileExtending')}
                 sx={{marginTop: '10px'}}
             >
                 {profileSubjects.map(({name}) => (

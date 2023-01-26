@@ -15,7 +15,7 @@ import {
 
 import {Menu as MenuIcon} from "@mui/icons-material";
 import {useRouter} from "next/router";
-import { useIntl } from "react-intl";
+import { useTranslation } from "next-export-i18n";
 
 interface NavItem {
     /**
@@ -39,15 +39,15 @@ const HeaderNavbar: React.FC<React.PropsWithChildren<any>> = ({children}) => {
 
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const router = useRouter();
-    const {formatMessage} = useIntl();
+    const {t} = useTranslation();
 
     const navItems: NavItem[] = [
         {
-            name: formatMessage({id: 'nav.home'}),
+            name: t('nav.home'),
             url: '/'
         },
         {
-            name: formatMessage({id: 'nav.calculator'}),
+            name: t('nav.calculator'),
             url: '/calculator'
         }
     ];
@@ -59,7 +59,7 @@ const HeaderNavbar: React.FC<React.PropsWithChildren<any>> = ({children}) => {
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
             <Typography variant="h6" sx={{ my: 2 }}>
-                {formatMessage({id: 'main-header'})}
+                {t('main-header')}
             </Typography>
             <Divider />
             <List>
@@ -93,7 +93,7 @@ const HeaderNavbar: React.FC<React.PropsWithChildren<any>> = ({children}) => {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                     >
-                        {formatMessage({id: 'main-header'})}
+                        {t('main-header')}
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (

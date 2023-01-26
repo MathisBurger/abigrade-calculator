@@ -4,11 +4,26 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} fr
 import { useIntl } from "react-intl";
 
 interface SaveDialogProps {
-    data: CalculationValues;
-    open: boolean;
-    onClose: () => void;
+  /**
+   * The data that should be saved
+   */
+  data: CalculationValues;
+  /**
+   * if the dialog is open at the moment
+   */
+  open: boolean;
+  /**
+   * Callback that is executed to close the dialog
+   */
+  onClose: () => void;
 }
 
+/**
+ * A dialog that makes it possible to save the current calculation state into the local storage of the browser
+ * for later use.
+ *
+ * @constructor
+ */
 const SaveDialog: React.FC<SaveDialogProps> = ({data, open, onClose}) => {
 
     const [name, setName] = useState<string>('');

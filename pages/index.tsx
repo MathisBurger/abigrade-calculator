@@ -5,7 +5,11 @@ import {useRouter} from "next/router";
 import { useTranslation } from "react-i18next";
 import { useIntl } from "react-intl";
 
-
+/**
+ * Default home page
+ *
+ * @constructor
+ */
 export default function Home() {
 
     const router = useRouter();

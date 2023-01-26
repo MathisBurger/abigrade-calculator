@@ -6,12 +6,29 @@ import AddTestimonyDialog from "./AddTestimonyDialog";
 import { useIntl } from "react-intl";
 
 interface TestimonySideListProps {
-    testimonies: Testimony[];
-    setTestimonies: (testomonies: Testimony[]) => void;
-    setCurrentTestimony: (id: number) => void;
+  /**
+   * All testimonies
+   */
+  testimonies: Testimony[];
+  /**
+   * Sets all testimonies
+   *
+   * @param testomonies The testimonies
+   */
+  setTestimonies: (testomonies: Testimony[]) => void;
+  /**
+   * Sets the current testimony
+   *
+   * @param id The index of the testimony
+   */
+  setCurrentTestimony: (id: number) => void;
 }
 
-
+/**
+ * Side bar selection for the current testimony
+ *
+ * @constructor
+ */
 const TestimonySideList: React.FC<TestimonySideListProps> = ({testimonies, setTestimonies, setCurrentTestimony}) => {
 
     const {formatMessage} = useIntl();

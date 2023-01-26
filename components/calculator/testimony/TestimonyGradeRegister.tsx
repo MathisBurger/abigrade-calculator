@@ -7,11 +7,27 @@ import {GetAllSubjects, Subject} from "../../../utils/subject";
 import { useIntl } from "react-intl";
 
 export interface TestimonyGradeRegisterProps {
+    /**
+     * All testimonies
+     */
     testimonies: Testimony[];
+    /**
+     * The current testimony index
+     */
     testimonyIndex: number;
+    /**
+     * Sets all testimonies
+     *
+     * @param testimonies The testimonies
+     */
     setTestimonys: (testimonies: Testimony[]) => void;
 }
 
+/**
+ * Detailed view for adding new grades to a testimony
+ *
+ * @constructor
+ */
 const TestimonyGradeRegister: React.FC<TestimonyGradeRegisterProps> = ({testimonies, testimonyIndex, setTestimonys}) => {
 
     const {formatMessage} = useIntl();

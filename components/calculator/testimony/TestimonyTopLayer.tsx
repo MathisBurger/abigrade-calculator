@@ -12,21 +12,49 @@ export enum Semester {
 }
 
 export interface Grade {
+    /**
+     * Subject of a grade
+     */
     subject: Subject|null;
+    /**
+     * The grade
+     */
     grade: number;
 }
 
 export interface Testimony {
+    /**
+     * The semester of the testimony
+     */
     semester: Semester;
+    /**
+     * The name of the testimony
+     */
     name: string;
+    /**
+     * The grades of the testimony
+     */
     grades: Grade[];
 }
 
 interface TestimonyTopLayerProps {
+    /**
+     * The testimony
+     */
     testimonies: Testimony[];
+    /**
+     * Sets the testimony
+     *
+     * @param testomonies The testimony
+     */
     setTestimonies: (testomonies: Testimony[]) => void;
 }
 
+/**
+ * Top Layer that contains a list view and a detailed view of the testimonies
+ *
+ * @constructor
+ */
 const TestimonyTopLayer: React.FC<TestimonyTopLayerProps> = ({testimonies, setTestimonies}) => {
 
     const [currentTestimony, setCurrentTestimony] = useState<number>(-1);

@@ -18,12 +18,23 @@ import {useRouter} from "next/router";
 import { useIntl } from "react-intl";
 
 interface NavItem {
+    /**
+     * Name of the nav item
+     */
     name: string;
+    /**
+     * The URL of the route
+     */
     url: string;
 }
 
 const drawerWidth = 240;
 
+/**
+ * The navbar of the application
+ *
+ * @constructor
+ */
 const HeaderNavbar: React.FC<React.PropsWithChildren<any>> = ({children}) => {
 
     const [mobileOpen, setMobileOpen] = React.useState(false);

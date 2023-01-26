@@ -2,7 +2,9 @@ import React from "react";
 import { TreeItem, treeItemClasses } from "@mui/lab";
 import { styled } from '@mui/material/styles';
 
-
+/**
+ * TreeItem that has a modified style
+ */
 const ModifiedTreeItem = styled(TreeItem)(({ theme }) => ({
   color: theme.palette.text.secondary,
   [`& .${treeItemClasses.content}`]: {

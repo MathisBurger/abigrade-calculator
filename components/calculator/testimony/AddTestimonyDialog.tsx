@@ -5,12 +5,31 @@ import { useIntl } from "react-intl";
 
 
 interface AddTestimonyDialogProps {
-    testimonies: Testimony[];
-    setTestimonies: (testomonies: Testimony[]) => void;
-    open: boolean;
-    onClose: () => void;
+  /**
+   * All testimonies
+   */
+  testimonies: Testimony[];
+  /**
+   * Sets all testimonies
+   *
+   * @param testomonies The testimonies
+   */
+  setTestimonies: (testomonies: Testimony[]) => void;
+  /**
+   * if the dialog is opened
+   */
+  open: boolean;
+  /**
+   * Callback that is executed if the dialog should be closed
+   */
+  onClose: () => void;
 }
 
+/**
+ * Dialog for adding new testimonies
+ *
+ * @constructor
+ */
 const AddTestimonyDialog: React.FC<AddTestimonyDialogProps> = ({testimonies, setTestimonies, open, onClose}) => {
 
     const {formatMessage} = useIntl();

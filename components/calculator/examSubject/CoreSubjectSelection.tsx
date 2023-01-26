@@ -6,10 +6,23 @@ import {GetAllCoreSubjects, GetSubjectByName, Subject} from "../../../utils/subj
 import { useIntl } from "react-intl";
 
 interface CoreSubjectSelectionProps {
-    setCoreSubjects: (subjects: (Subject|null)[]) => void;
-    examSubjects?: ExamSubjects;
+  /**
+   * Sets all core subjects
+   *
+   * @param subjects The new core subjects
+   */
+  setCoreSubjects: (subjects: (Subject|null)[]) => void;
+  /**
+   * The exam subjects that have been set by the user
+   */
+  examSubjects?: ExamSubjects;
 }
 
+/**
+ * Provides inputs for setting the core subjects.
+ *
+ * @constructor
+ */
 const CoreSubjectSelection: React.FC<CoreSubjectSelectionProps> = ({setCoreSubjects, examSubjects}) => {
 
     const {formatMessage} = useIntl();

@@ -6,9 +6,17 @@ import { useIntl } from "react-intl";
 import CalculationGraphView from "./CalculationGraphView";
 
 interface FinalResultDisplayProps {
-    values: CalculationValues;
+  /**
+   * All values that should be used for calculation
+   */
+  values: CalculationValues;
 }
 
+/**
+ * Displays the final A levels result
+ *
+ * @constructor
+ */
 const FinalResultDisplay: React.FC<FinalResultDisplayProps> = ({values}) => {
 
     const {formatMessage} = useIntl();

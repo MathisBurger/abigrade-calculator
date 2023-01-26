@@ -7,11 +7,23 @@ export enum SubjectType {
 }
 
 export interface Subject {
+    /**
+     * name of a subject
+     */
     name: string;
+    /**
+     * if it is a core subject
+     */
     coreSubject: boolean;
+    /**
+     * The subject type
+     */
     type: SubjectType;
 }
 
+/**
+ * All subjects
+ */
 const SUBJECTS: Subject[] = [
     {
         name: 'Deutsch',
@@ -110,10 +122,32 @@ const SUBJECTS: Subject[] = [
     }
 ];
 
+/**
+ * Gets all subjects
+ *
+ * @constructor
+ */
 export const GetAllSubjects = (): Subject[] => SUBJECTS;
 
+/**
+ * Gets all core subjects
+ *
+ * @constructor
+ */
 export const GetAllCoreSubjects = (): Subject[] => SUBJECTS.filter((s) => s.coreSubject);
 
+/**
+ * Gets a subject by name
+ *
+ * @param name The name of the subject
+ *
+ * @constructor
+ */
 export const GetSubjectByName = (name: string): Subject|null => SUBJECTS.filter((s) => s.name === name)[0] ?? null;
 
+/**
+ * Gets all science subjects
+ *
+ * @constructor
+ */
 export const GetAllScienceSubjects = (): (Subject|null)[] => SUBJECTS.filter((s) => s.type === SubjectType.Science);

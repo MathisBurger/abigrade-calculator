@@ -1,17 +1,30 @@
 import {CalculationValues} from "../../../pages/calculator";
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, MenuItem, Select} from "@mui/material";
-import {Province} from "../inputs/ProvinceSelect";
 import { useIntl } from "react-intl";
 
 interface LoadDialogProps {
-    setPreset: (values: CalculationValues) => void;
-    open: boolean;
-    onClose: () => void;
+  /**
+   * Sets the preset that has been loaded
+   *
+   * @param values The preset
+   */
+  setPreset: (values: CalculationValues) => void;
+  /**
+   * If the dialog is open at the moment
+   */
+  open: boolean;
+  /**
+   * Callback that is executed to close the dialog
+   */
+  onClose: () => void;
 }
 
-
-
+/**
+ * A dialog that loads a preset into storage
+ *
+ * @constructor
+ */
 const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
 
     const {formatMessage} = useIntl();
@@ -19,8 +32,10 @@ const LoadDialog: React.FC<LoadDialogProps> = ({setPreset, open, onClose}) => {
     const [selected, setSelected] = useState<string>('');
 
     const onLoad = () => {
-        setPreset(presets[selected]);
-        onClose();
+        if (selected !== '') {
+          setPreset(presets[selected]);
+          onClose();
+        }
     }
 
     return (

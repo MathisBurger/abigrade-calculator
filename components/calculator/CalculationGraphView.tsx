@@ -7,9 +7,17 @@ import ModifiedTreeItem from "./ModifiedTreeItem";
 
 
 interface CalculationGraphViewProps {
+  /**
+   * The calculation graph
+   */
   graph: CalculationGraph;
 }
 
+/**
+ * Displays the calculation graph in a tree.
+ *
+ * @constructor
+ */
 const CalculationGraphView: React.FC<CalculationGraphViewProps> = ({graph}) => {
 
   const buildGraph = (calc_graph: CalculationGraph) => {

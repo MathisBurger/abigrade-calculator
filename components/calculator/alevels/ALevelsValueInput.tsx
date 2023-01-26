@@ -6,13 +6,36 @@ import { useIntl } from "react-intl";
 import { Grade } from "../testimony/TestimonyTopLayer";
 
 export interface ALevelsValueInputProps {
+    /**
+     * All A level results
+     */
     results: Grade[];
+    /**
+     * All exam subjects that have been selected
+     */
     examSubjects?: ExamSubjects;
+    /**
+     *
+     * Sets the new a level results
+     *
+     * @param results The new A level results
+     */
     setALevelsResults: (results: Grade[]) => void;
+    /**
+     * The title of the component
+     */
     title: string;
+    /**
+     * Indicates whether it is the real A levels or just testing a levels
+     */
     pre: boolean;
 }
 
+/**
+ * Wraps a row of inputs together to let the user input his results of the a level exams.
+ *
+ * @constructor
+ */
 const ALevelsValueInput: React.FC<ALevelsValueInputProps> = ({examSubjects, setALevelsResults, title, results, pre}) => {
 
     const {formatMessage} = useIntl();

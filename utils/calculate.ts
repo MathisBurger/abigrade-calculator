@@ -6,27 +6,60 @@ import { GetAllScienceSubjects, GetSubjectByName, Subject } from "./subject";
 import { MessageDescriptor, PrimitiveType } from "react-intl";
 import { FormatXMLElementFn, Options } from "intl-messageformat";
 
+/**
+ * Translator type
+ */
 export type MessageTranslator = (descriptor: MessageDescriptor, values?: Record<string, PrimitiveType | FormatXMLElementFn<string, string>> | undefined, opts?: Options | undefined) => string;
 
 export interface CalculateValueResult {
+    /**
+     * All points
+     */
     points: number;
+    /**
+     * The final grade
+     */
     grade: string;
+    /**
+     * The final calculation graph
+     */
     calculationGraph: CalculationGraph;
 }
 
 interface ExtendedGrade extends Grade {
+    /**
+     * Testimony index
+     */
     testimonyIndex: number;
 }
 
 export interface CalculationGraph {
+    /**
+     * The grade
+     */
     grade?: Grade;
+    /**
+     * Description of the element
+     */
     description: string;
+    /**
+     * All children of the element
+     */
     children?: CalculationGraph[];
 }
 
+/**
+ * Calculation type
+ */
 type Calculation = [Grade[], Testimony[]];
 
-
+/**
+ * Calculates the A levels result
+ *
+ * @param values All inserted values
+ * @param formatMessage The translator
+ * @constructor
+ */
 export const CalculateALevelsResult = (values: CalculationValues, formatMessage: MessageTranslator): CalculateValueResult => {
 
     let rootGraphElement: CalculationGraph = {description: formatMessage({id: 'calc.root-graph'})};
@@ -164,11 +197,23 @@ export const CalculateALevelsResult = (values: CalculationValues, formatMessage:
     }
 }
 
+/**
+ * Updates a children of CalculationGraph
+ *
+ * @param el The element that should be updated
+ * @param new_el The new child
+ */
 const updateChildren = (el: CalculationGraph, new_el: CalculationGraph): CalculationGraph => {
     el.children = [...(el.children ?? []), new_el];
     return el;
 }
 
+/**
+ * Gets all A level subject results
+ *
+ * @param testimonies All testimonies
+ * @param core exam subjects
+ */
 const getALevelSubjGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
     const selectedCoreSubjects = (core?.coreSubjects ?? []);
     let grades = [];
@@ -199,6 +244,12 @@ const getALevelSubjGrades = (testimonies: Testimony[], core: ExamSubjects): Calc
     ];
 }
 
+/**
+ * Gets extra core subject grades
+ *
+ * @param testimonies All testimonies
+ * @param core exam subjects
+ */
 const extraCoreSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
     const selectedCoreSubjects = (core?.coreSubjects ?? []);
     const missingCoreSubject = getMissingCoreSubject(selectedCoreSubjects);
@@ -216,6 +267,12 @@ const extraCoreSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): C
     ]
 }
 
+/**
+ * Gets all science grades
+ *
+ * @param testimonies All testimonies
+ * @param core exam subjects
+ */
 const scienceSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
     const scienceSubjects = GetAllScienceSubjects();
     if (scienceSubjects.indexOf(core?.profileSubject ?? null) > -1) {
@@ -238,6 +295,12 @@ const scienceSubjectGrades = (testimonies: Testimony[], core: ExamSubjects): Cal
     ]
 }
 
+/**
+ * Gets all profile extending grades
+ *
+ * @param testimonies All testimonies
+ * @param core exam subjects
+ */
 const getProfileExtendingGrades = (testimonies: Testimony[], core: ExamSubjects): Calculation => {
     const profileExtending = core?.profileExtendingSubject?.name ?? '';
     let grades = [];
@@ -254,6 +317,11 @@ const getProfileExtendingGrades = (testimonies: Testimony[], core: ExamSubjects)
     ];
 }
 
+/**
+ * Gets all aesatic subject results
+ *
+ * @param testimonies All testimonies
+ */
 const getAestaticGrades = (testimonies: Testimony[]): Calculation => {
     const subj = findAestaticSubject(testimonies[0]);
     let grades = [];
@@ -270,6 +338,11 @@ const getAestaticGrades = (testimonies: Testimony[]): Calculation => {
     ];
 }
 
+/**
+ * Gets all history grades
+ *
+ * @param testimonies All testimonies
+ */
 const getHistoryGrades = (testimonies: Testimony[]): Calculation => {
     let historyGrades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies);
     historyGrades = historyGrades
@@ -287,6 +360,11 @@ const getHistoryGrades = (testimonies: Testimony[]): Calculation => {
     ]
 }
 
+/**
+ * Gets all geo / wipo grades
+ *
+ * @param testimonies All testimonies
+ */
 const getGeoWiPoGrades = (testimonies: Testimony[]): Calculation => {
     let grades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies);
     grades = grades
@@ -304,6 +382,11 @@ const getGeoWiPoGrades = (testimonies: Testimony[]): Calculation => {
     ]
 }
 
+/**
+ * Gets all reli / philo grades
+ *
+ * @param testimonies All testimonies
+ */
 const getReliPhiloGrades = (testimonies: Testimony[]): Calculation => {
     let grades: ExtendedGrade[] = getAllGradesFromTestamonies(testimonies);
     grades = grades
@@ -321,6 +404,11 @@ const getReliPhiloGrades = (testimonies: Testimony[]): Calculation => {
     ];
 }
 
+/**
+ * Gets the missing core subject
+ *
+ * @param core All core subjects
+ */
 const getMissingCoreSubject = (core: (Subject|null)[]): Subject|null => {
 
     const deutsch = GetSubjectByName('Deutsch');
@@ -332,6 +420,11 @@ const getMissingCoreSubject = (core: (Subject|null)[]): Subject|null => {
     return mathe;
 }
 
+/**
+ * Gets all grades from testimonies
+ *
+ * @param testamonies the testimonies
+ */
 const getAllGradesFromTestamonies = (testamonies: Testimony[]): ExtendedGrade[] => {
     let grades: ExtendedGrade[] = [];
     for (let i=0; i<testamonies.length; i++) {
@@ -350,6 +443,11 @@ const getAllGradesFromTestamonies = (testamonies: Testimony[]): ExtendedGrade[] 
     return grades;
 }
 
+/**
+ * Gets the selected aestatic subject
+ *
+ * @param testimony The testimony that contains the subject
+ */
 const findAestaticSubject = (testimony: Testimony): Subject|null => {
     const kunst = GetSubjectByName('Kunst');
     const musik = GetSubjectByName('Musik');
@@ -360,6 +458,11 @@ const findAestaticSubject = (testimony: Testimony): Subject|null => {
     return dsp;
 }
 
+/**
+ * Filters out the worst PE grade
+ *
+ * @param grades All grades
+ */
 const removeWorstPEGradeFromGrades = (grades: Grade[]): Grade[] => {
     let reversed = grades.reverse();
     for (let grade of reversed) {

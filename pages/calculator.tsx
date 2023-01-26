@@ -13,12 +13,29 @@ import {ValidateExamSubjectsComplete} from "../utils/examSubject";
 import { useIntl } from "react-intl";
 
 export interface CalculationValues {
+    /**
+     * province
+     */
     province?: Province;
+    /**
+     * All testimonies
+     */
     testomonies?: Testimony[];
+    /**
+     * All exam subjects
+     */
     examSubjects?: ExamSubjects;
+    /**
+     * All a level results
+     */
     aLevelsResults: ALevelsResults;
 }
 
+/**
+ * Calculator page
+ *
+ * @constructor
+ */
 const Calculator: NextPage = () => {
 
     const {formatMessage} = useIntl();

@@ -4,17 +4,40 @@ import {ArrowBack, ArrowCircleRight, ArrowLeft, ArrowRight} from "@mui/icons-mat
 import { useIntl } from "react-intl";
 
 export interface StepperProcessStep {
+    /**
+     * The label of a step
+     */
     label: string;
+    /**
+     * The component that should be rendered
+     */
     component: JSX.Element|null;
+    /**
+     * Checks if a step can be submitted
+     */
     checkCanSubmit: () => boolean;
 }
 
 interface StepperProcessProps {
+    /**
+     * Active step
+     */
     activeStep: number;
+    /**
+     * Sets the active step
+     */
     setActiveStep: Dispatch<SetStateAction<number>>;
+    /**
+     * All steps of the stepper process
+     */
     steps: StepperProcessStep[];
 }
 
+/**
+ * Wraps all stepper steps into a stepper process.
+ *
+ * @constructor
+ */
 const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveStep, steps}) => {
 
     const {formatMessage} = useIntl();
@@ -61,7 +84,7 @@ const StepperProcess: React.FC<StepperProcessProps> = ({activeStep, setActiveSte
                     </Button>
                 </Grid>
                 <Grid item xs={3}>
-                    <Button color="primary" variant="contained" onClick={handleNextClick}>
+                    <Button color="primary" variant="contained" onClick={handleNextClick} disabled={!steps[activeStep].checkCanSubmit()}>
                         <ArrowRight />&nbsp;
                         {formatMessage({id: 'action.next'})}
                     </Button>
